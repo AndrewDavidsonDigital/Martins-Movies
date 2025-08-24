@@ -56,7 +56,7 @@ This site is a technical task, see [Requirements.md](./Requirements.md), bootstr
 - **Movie Discovery**: Browse movies with pagination
 - **Advanced Search**: Search movies by title and keywords
 - **Smart Filtering**: Multiple filter options (Featured, Top Rated, Newest, etc.)
-- **Responsive Design**: Grid and List view modes
+- **Responsive Design**: Grid and List view modes, [List View Design](https://gnodesign.com/templates/movify/movie-list.htm)
 - **External Links**: Direct links to IMDB pages
 - **Trailer Modal**: Video player for movie trailers
 - **Authentication UI**: Sign-in, Sign-up, and Password reset forms
@@ -65,11 +65,13 @@ This site is a technical task, see [Requirements.md](./Requirements.md), bootstr
 
 ### 🔄 Planned Enhancements
 - **Improved Loading States**: Minimum display time to prevent flashing
-- **Modal Refactoring**: Centralized modal management
+- **Modal Refactoring**: Centralized video modal for listing
+- **Modal Refactoring 2**: Login / nav modals need a transition clean up.
 - **Mobile Pagination**: Mobile pagination as a whole needs a design re-factor as it doesn't really fit and visually feels forced.
 - **Better Mobile Navigation**: Enhanced mobile experience
 - **Contextual Scroll-to-Top**: Button should only be visible when we are not already at the top.
 - **Critical CSS**: Performance optimizations
+- **Component Test Coverage**: UI and E2E testing or component library
 
 ### ❌ Excluded Features
 - Critical CSS / Splash Screen
