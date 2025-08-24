@@ -38,7 +38,7 @@ export function Modal(props: ModalProps) {
           z-modal
           backdrop:bg-black/75
         `, 
-        sizeClasses[props.size || 'md'], 
+        sizeClasses[props.size ?? 'md'], 
         props.className,
       )}
     >

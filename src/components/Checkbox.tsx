@@ -24,9 +24,9 @@ export function Checkbox(props: CheckboxProps) {
           type="checkbox"
           id={props.id}
           name={props.name}
-          checked={props.checked || false}
+          checked={props.checked ?? false}
           onChange={handleChange}
-          disabled={props.disabled || false}
+          disabled={props.disabled ?? false}
           className="w-4 h-4 text-brand bg-white border-slate-500/50 rounded focus:ring-brand focus:ring-2"
         />
         <span className="text-slate-800/80">{props.label}</span>

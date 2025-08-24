@@ -1,16 +1,14 @@
 'use client'
 
 import { Fragment, useState } from "react";
-import { IRoute, staticRoutes } from "@/app/routes";
+import { staticRoutes } from "@/app/routes";
 import classNames from "classnames";
 import { usePathname } from 'next/navigation'
 import Link from "next/link";
 import Image from "next/image";
 import Login from "@/structure/Login";
-import { IBaseProps } from "@/utils/interfaces";
+import { IBaseProps, IRoute } from "@/utils/interfaces";
 import { MenuIcon } from "@/components/icons";
-
-interface IRouteProps extends IRoute {};
 
 interface AnimatedMenuIconProps {
   isOpen: boolean;
@@ -121,11 +119,11 @@ function isActive(route: IRoute, pathname: string): boolean{
   return route.path === pathname || route?.alias === pathname;
 }
 
-function NavRoute( props: IRouteProps) {
+function NavRoute( props: IRoute) {
   return (
     <Fragment>
       <Link
-        href={props.alias ? props.alias : props.path}
+        href={props.alias ?? props.path}
         className={`${isActive(props, usePathname()) ? '!pointer-events-none !cursor-default text-brand underline decoration-brand' : ''}`}
       >
         <button 

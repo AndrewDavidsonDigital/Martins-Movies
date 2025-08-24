@@ -10,7 +10,7 @@ declare global {
   solve a custom solution / polyfill for it
 */
 declare module 'react' {
-  interface HTMLAttributes<T> {
+  interface DialogHTMLAttributes<_T> extends DialogHTMLAttributes {
     closedby?: string;
   }
 }

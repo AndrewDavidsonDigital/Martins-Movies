@@ -1,6 +1,6 @@
 import { IRoute } from "@/utils/interfaces";
 
-export const staticRoutes: Array<IRoute> = [
+export const staticRoutes: IRoute[] = [
   {
     name: 'Home',
     path: '',

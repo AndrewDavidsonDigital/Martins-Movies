@@ -37,13 +37,13 @@ export function Input(props: InputProps) {
       <input
         id={props.id}
         name={props.name}
-        type={props.type || "text"}
+        type={props.type ?? "text"}
         placeholder={props.placeholder}
         value={props.value}
         onChange={handleChange}
         onKeyDown={(e) => handleKeydown(e)}
-        disabled={props.disabled || false}
-        required={props.required || false}
+        disabled={props.disabled ?? false}
+        required={props.required ?? false}
         autoComplete={props.autoComplete}
         className="h-12 px-4 py-2 border border-slate-500/50 rounded-md text-slate-800/80 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent"
       />

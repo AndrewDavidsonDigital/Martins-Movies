@@ -39,6 +39,8 @@ class ApiService {
           const headers = createTMDBHeaders();
 
           const result = await fetch(url, { headers, });
+          // disable any warning here as this is fine since we are just transforming this to a string.
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           const dataJson = await result.json();
 
           return {
@@ -50,7 +52,7 @@ class ApiService {
         default:
           return { success: false, error: 'Route not found' };
       }
-    }catch(e){
+    }catch(_e){
       return { success: false, error: 'Internal Error' };
     }
   }

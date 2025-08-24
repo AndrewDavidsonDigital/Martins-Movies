@@ -6,7 +6,7 @@ import { ReactNode } from 'react';
 
 interface ButtonProps {
   children?: ReactNode;
-  action: (event: any) => void;
+  action: (event: React.MouseEvent<HTMLButtonElement>) => void;
   isInverted?: boolean;
   copy: string;
 }

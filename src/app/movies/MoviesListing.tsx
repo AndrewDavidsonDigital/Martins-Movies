@@ -3,7 +3,7 @@
 import { ShowCard, Pagination, Input } from "@/components";
 import { API_URL_KEYWORD_IDS, API_URL_KEYWORD_IDS_BINDINGS, API_URL_MOVIE_FULL_DETAILS, API_URL_MOVIE_FULL_DETAILS_BINDINGS, API_URL_MOVIE_LISTING, apiService } from "@/utils/api";
 import { IDiscoverMoviesAPI, IKeywordsAPI, IMovieCombinationDetail, IMovieDetailAPI,  } from "@/utils/interfaces";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useState, useEffect } from "react";
 import { GridIcon, ListIcon, SearchIcon } from "@/components/icons";
 import { useMovies, moviesActions } from "@/contexts";
 
@@ -31,46 +31,38 @@ export function MoviesListing() {
   } = state;
 
   const [isGridLayout, setGridLayout] = useState<boolean>(true);
+  // not exposed currently
+  const [_error, setError] = useState<string | null>(null);
   const filterOptions = Object.keys(FILTER_OPTIONS);
   const SEARCH_ID = "movie_search_id";
 
+  // Load initial data when component mounts
   useEffect(() => {
-    refreshDataWithPage();
-  },[]);
+    void refreshDataWithPage();
+  }, []); // Empty dependency array means this runs once on mount
 
-
-  const handlePageChange = (page: number) => {
-    dispatch(moviesActions.setDestinationPage(page));
-    refreshDataWithPage({page});
+  const handlePageChange = async (page: number) => {
+    try {
+      dispatch(moviesActions.setDestinationPage(page));
+      await refreshDataWithPage({page});
+    } catch (error) {
+      console.error('Error changing page:', error);
+      setError('Failed to load page. Please try again.');
+    }
   };
 
   async function refreshDataWithPage(config?: { page?: number, filter?: string, search?: string}) {
     // console.log(`${Date.now()}: calling refresh with config ${JSON.stringify(config)}`)
     dispatch(moviesActions.setLoading(true));
+    setError(null); // Clear any previous errors
     
     // baseline filters to exclude NSFW and tv-series??
     let selectionDetails = '?language=en-US&include_adult=false&include_video=false';
 
-    if (config?.search){
-      const keywordIdsData = await apiService.get(
-        `${API_URL_KEYWORD_IDS.replaceAll(API_URL_KEYWORD_IDS_BINDINGS[0], `${config?.search.toLowerCase()}`)}`, 
-        API_URL_KEYWORD_IDS
-      );
-      if (keywordIdsData.success && keywordIdsData.response){
-        const keywordIdsAsObject = JSON.parse(keywordIdsData.response) as IKeywordsAPI;
-        const keywordsString = keywordIdsAsObject.results
-          .map(el => el.id)
-          .toSpliced(0,keywordIdsAsObject.results.length - MAX_KEYWORDS)
-          .join('|')
-        ;
-        selectionDetails +=  (`&with_keywords=${keywordsString}`);
-      }
-    }else {
-      if (searchTerms.length > 0){
-        // selectionDetails +=  (`&with_keywords=${searchTerms}`).trim();
-
+    try {
+      if (config?.search){
         const keywordIdsData = await apiService.get(
-          `${API_URL_KEYWORD_IDS.replaceAll(API_URL_KEYWORD_IDS_BINDINGS[0], `${searchTerms.toLowerCase()}`)}`, 
+          `${API_URL_KEYWORD_IDS.replaceAll(API_URL_KEYWORD_IDS_BINDINGS[0], `${config?.search.toLowerCase()}`)}`, 
           API_URL_KEYWORD_IDS
         );
         if (keywordIdsData.success && keywordIdsData.response){
@@ -82,26 +74,42 @@ export function MoviesListing() {
           ;
           selectionDetails +=  (`&with_keywords=${keywordsString}`);
         }
+      }else {
+        if (searchTerms.length > 0){
+          // selectionDetails +=  (`&with_keywords=${searchTerms}`).trim();
+
+          const keywordIdsData = await apiService.get(
+            `${API_URL_KEYWORD_IDS.replaceAll(API_URL_KEYWORD_IDS_BINDINGS[0], `${searchTerms.toLowerCase()}`)}`, 
+            API_URL_KEYWORD_IDS
+          );
+          if (keywordIdsData.success && keywordIdsData.response){
+            const keywordIdsAsObject = JSON.parse(keywordIdsData.response) as IKeywordsAPI;
+            const keywordsString = keywordIdsAsObject.results
+              .map(el => el.id)
+              .toSpliced(0,keywordIdsAsObject.results.length - MAX_KEYWORDS)
+              .join('|')
+            ;
+            selectionDetails +=  (`&with_keywords=${keywordsString}`);
+          }
+        }
       }
-    }
 
-    if (config?.filter){
-      selectionDetails +=  `&${FILTER_OPTIONS[config?.filter as keyof typeof FILTER_OPTIONS]}`;
-    }else {
-      if (filterType.length > 0 && filterType !== 'Default Order'){
-        selectionDetails +=  `&${FILTER_OPTIONS[filterType as keyof typeof FILTER_OPTIONS]}`;
+      if (config?.filter){
+        selectionDetails +=  `&${FILTER_OPTIONS[config?.filter as keyof typeof FILTER_OPTIONS]}`;
+      }else {
+        if (filterType.length > 0 && filterType !== 'Default Order'){
+          selectionDetails +=  `&${FILTER_OPTIONS[filterType as keyof typeof FILTER_OPTIONS]}`;
+        }
       }
-    }
 
-    // Use the passed page parameter or fall back to destinationPage from state
-    const pageToUse = config?.page !== undefined ? config?.page : destinationPage;
-    if (pageToUse !== 0 ){
-      selectionDetails +=  `&page=${pageToUse}`;
-    }
+      // Use the passed page parameter or fall back to destinationPage from state
+      const pageToUse = config?.page ?? destinationPage;
+      if (pageToUse !== 0 ){
+        selectionDetails +=  `&page=${pageToUse}`;
+      }
 
-    selectionDetails = selectionDetails.replaceAll(' ','%20');
+      selectionDetails = selectionDetails.replaceAll(' ','%20');
 
-    try {
       const data = await apiService.get(`${API_URL_MOVIE_LISTING}${selectionDetails}`, API_URL_MOVIE_LISTING);
       
       if (data.success && data.response){
@@ -144,24 +152,38 @@ export function MoviesListing() {
       }
     } catch (error) {
       console.error('Error refreshing data:', error);
+      setError('Failed to load movies. Please check your connection and try again.');
+      // Reset to empty state on error
+      dispatch(moviesActions.setListingData([]));
+      dispatch(moviesActions.resetSearch());
     } finally {
       dispatch(moviesActions.setLoading(false));
     }
   }
 
-  function handleSearch(){
-    const el = document.getElementById(SEARCH_ID);
-    let localTerm = '';
-    if (el){
-      localTerm = (el as HTMLInputElement).value;
+  async function handleSearch(){
+    try {
+      const el = document.getElementById(SEARCH_ID);
+      let localTerm = '';
+      if (el){
+        localTerm = (el as HTMLInputElement).value;
+      }
+      await refreshDataWithPage({page: 1, search: localTerm});
+    } catch (error) {
+      console.error('Error during search:', error);
+      setError('Search failed. Please try again.');
     }
-    refreshDataWithPage({page: 1, search: localTerm});
   }
 
-  function handleFilterChange(e: ChangeEvent<HTMLSelectElement>){
-    const val = e.target.value;
-    dispatch(moviesActions.setFilterType(val));
-    refreshDataWithPage({page: 1, filter: val});
+  async function handleFilterChange(e: ChangeEvent<HTMLSelectElement>){
+    try {
+      const val = e.target.value;
+      dispatch(moviesActions.setFilterType(val));
+      await refreshDataWithPage({page: 1, filter: val});
+    } catch (error) {
+      console.error('Error changing filter:', error);
+      setError('Failed to apply filter. Please try again.');
+    }
   }
 
   return (
@@ -191,7 +213,7 @@ export function MoviesListing() {
         {/* Filter */}
         <select 
           className="py-2 px-4 h-10 rounded-md border bg-white border-slate-400 text-slate-600 w-fit md:w-60 lg:w-68 appearance-none focus-visible:outline-2 focus-visible:outline-brand"
-          onChange={(e)=> handleFilterChange(e)}
+          onChange={(e)=> void handleFilterChange(e)}
           value={filterType}
         >
           {filterOptions.map((filter, filterIndex) => (
@@ -209,13 +231,13 @@ export function MoviesListing() {
           name="listings_search"
           placeholder="Search for Movie"
           type="text"
-          onKbEnter={() => handleSearch()}
+          onKbEnter={() => void handleSearch()}
           onChange={(e) => dispatch(moviesActions.setSearchTerms(e))}
           value={searchTerms}
         /> 
         <button 
           className="aspect-square ml-auto h-12 px-4 bg-brand rounded-r-md text-white"
-          onClick={() => handleSearch()}
+          onClick={() => void handleSearch()}
         >
           <SearchIcon className="scale-125"/>
         </button>
@@ -235,7 +257,7 @@ export function MoviesListing() {
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
-            onPageChange={(e) => handlePageChange(e)}
+            onPageChange={(e) => void handlePageChange(e)}
           />
         </div>
         {/* display */}
@@ -255,7 +277,7 @@ export function MoviesListing() {
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
-            onPageChange={(e) => handlePageChange(e)}
+            onPageChange={(e) => void handlePageChange(e)}
             className="mt-8"
           />
         </div>

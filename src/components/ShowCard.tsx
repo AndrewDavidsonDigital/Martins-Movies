@@ -5,13 +5,14 @@ import { Modal } from './Modal';
 import { closeModal, openModal } from '@/utils/modal';
 import { useRef, useState } from 'react';
 import { getYouTubeEmbedUrl } from '@/utils/string';
+import Image from 'next/image';
 
 interface IShowCardProps extends IMovieCombinationDetail{
   isGrid: boolean;
   hasVideo: boolean;
 }
 
-  function GenresDisplay({ genres, className }: { genres: Array<{ id: number; name: string }>; className?: string }) {
+  function GenresDisplay({ genres, className }: { genres: { id: number; name: string }[]; className?: string }) {
   const displayGenres = genres.toSpliced(0, genres.length - 2);
   
   return (
@@ -32,7 +33,7 @@ export function ShowCard(props: IShowCardProps) {
 
 
   function toggleOpenVideo(videoSrc: string){
-    setVideoSrc(old => videoSrc);
+    setVideoSrc(_old => videoSrc);
     if (modalVideo.current && !(modalVideo.current.open)){
       openModal(modalVideo);
     }
@@ -79,7 +80,7 @@ export function ShowCard(props: IShowCardProps) {
           />
         )}
         {!(props.poster_path) && (
-          <img
+          <Image
             alt={`${props.title}'s poster`}
             src={`/placeholder-image.jpg`}
             className='w-full h-auto min-h-20 object-contain'

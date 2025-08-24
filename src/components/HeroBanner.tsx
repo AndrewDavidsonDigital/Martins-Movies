@@ -9,7 +9,7 @@ export function HeroBanner() {
   const pathName = usePathname();
 
   const routeConfig = resolveRouteFromPath(pathName);
-  let routeStruct: Array<string>  = [''];
+  let routeStruct: string[]  = [''];
   if (routeConfig){
     routeStruct = resolveRoutePath(routeConfig);
   }

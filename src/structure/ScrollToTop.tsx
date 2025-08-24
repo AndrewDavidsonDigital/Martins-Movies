@@ -9,7 +9,7 @@ interface IScrollToTopProps extends IBaseProps {
 
 export default function ScrollToTop(props: IScrollToTopProps) {
 
-  const [shouldHide, setShouldHide] = useState<boolean>(true);
+  const [shouldHide, _setShouldHide] = useState<boolean>(true);
   
   const scrollToTop = () => {
     document.getElementById(props.targetId)?.scrollIntoView({ behavior: "smooth" });

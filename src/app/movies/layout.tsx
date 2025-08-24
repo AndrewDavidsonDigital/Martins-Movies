@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import { MoviesProvider } from '@/contexts';
 
 export default function DefaultLayout({
