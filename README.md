@@ -1,6 +1,7 @@
 ## Arcadian Digital - Martin's Movies Platform
 
 [![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js)](https://nextjs.org/) [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/) [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+
 [![Node.js](https://img.shields.io/badge/Node.js-22.17+-339933?style=for-the-badge&logo=node.js)](https://nodejs.org/) [![Yarn](https://img.shields.io/badge/Yarn-4.9+-2C8EBB?style=for-the-badge&logo=yarn)](https://yarnpkg.com/)
 
 A modern movie discovery platform built with Next.js 14, Tailwind CSS v4, and TypeScript. This project demonstrates a complete movie listing application with search, filtering, and responsive design capabilities.
@@ -120,6 +121,18 @@ yarn preview
 
 Both instances run on [http://localhost:3000](http://localhost:3000).
 
+### 4. Other Scripts
+
+Most of these will be included within the context of `yarn preview`
+
+```bash
+# Run the linter
+yarn lint
+
+# Run the test suites
+yarn test
+```
+
 ### 📱 Usage
 
 The application focuses on the movie listings page (`/movies`). Other routes direct the users to the main movie discovery interface.
@@ -162,30 +175,39 @@ The application integrates with The Movie Database (TMDB) API through three main
 
 ```
 src/
-├── app/                    # Next.js App Router
-│   ├── movies/            # Movie listing page
-│   ├── [...slug]/         # Dynamic route handling
-│   └── layout.tsx         # Root layout
-├── components/             # Reusable UI components
-│   ├── icons/             # SVG icon library
-│   ├── ButtonElement.tsx  # Button component
-│   ├── ShowCard.tsx       # Movie card component
-│   └── Modal.tsx          # Modal dialog
-├── contexts/               # React context providers
-│   └── MoviesContext.tsx  # Movie state management
-├── structure/              # Layout components
-│   ├── Navigation.tsx     # Main navigation
-│   ├── Footer.tsx         # Footer component
-│   └── PageWrapper.tsx    # Page layout wrapper
-├── utils/                  # Utility functions
-│   ├── api.ts             # API integration
-│   ├── interfaces.ts      # TypeScript interfaces
-│   └── string.ts          # String utilities
-├── style/                  # Styling and CSS
-│   ├── tailwind-additions.css  # Custom Tailwind utilities
-│   └── main.css           # Main stylesheet
-└── types/                  # TypeScript definitions
-    └── global.d.ts        # Global type declarations
+├── app/                       # Next.js App Router
+│   ├── movies/                 # Movie listing page
+│   ├── [...slug]/              # Dynamic route handling
+│   └── layout.tsx              # Root layout
+├── components/                # Reusable UI components
+│   ├── icons/                  # SVG icon library
+│   ├── ButtonElement.tsx       # Button Atom
+│   ├── Checkbox.tsx            # Checkbox Atom
+│   ├── HeroBanner.tsx          # Main Hero banner
+│   ├── Input.tsx               # Base Input Atom
+│   ├── LinkElement.tsx         # Base Anchor Link Atom
+│   ├── Modal.tsx               # Modal dialog
+│   └── ShowCard.tsx            # Movie card component
+├── contexts/                  # React context providers
+│   └── MoviesContext.tsx       # Movie state management
+├── structure/                 # Layout components
+│   ├── PageWrapper.tsx         # Page layout wrapper
+│   ├── Footer.tsx              # Footer component
+│   ├── Login.tsx               # Header Login Forms and modals
+│   ├── ScrollToTop.tsx         # Scroll widget
+│   └── Navigation.tsx          # Main header navigation
+├── utils/                     # Utility functions
+│   ├── api.ts                  # API integration
+│   ├── interfaces.ts           # TypeScript interfaces
+│   ├── modal.ts                # Modal Utilities
+│   └── string.ts               # String utilities
+├── style/                     # Styling and CSS
+│   ├── main.css                # Main stylesheet
+│   ├── custom.css              # Custom Raw CSS
+│   ├── tailwind-safelist.css   # Tailwind safelist file (currently empty)
+│   └── tailwind-additions.css  # Custom Tailwind utilities
+└── types/                     # TypeScript definitions
+    └── global.d.ts             # Global type declarations
 ```
 
 ### 🎨 Branding & Styling

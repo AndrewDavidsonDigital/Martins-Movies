@@ -27,24 +27,24 @@ You can sign up for a free account to get an API key.
 
 ##### Generic:
 I'm assuming the Design / Theme they "Like" is the one linked later in the brief
- - gnodesign - movie-grid3 AR: Correct
+ - gnodesign - movie-grid3 `Arcadian:` Correct
 
 ##### Design: Doesn't have a read more button, 
  - As such I'm assuming we would be technically repurposing the `details` button for this purpose, as  scope is for just a listings page (i.e. no details page.) 
-   - AR: Correct, no details page required
+   - `Arcadian:` Correct, no details page required
 
 ##### Requirement Gap:
  - The requirement for the `Read More` button indicates that it should only navigate off to IMDB if said id exists. 
-   - AR: Correct again
+   - `Arcadian:` Correct again
  - In the case where said ID doesn't exist, are you fine with either the button being hidden or navigating to a `local` details route for the movie (empty / sparse on detail)
-   - AR: Hidden would be great.
+   - `Arcadian:` Hidden would be great.
 
 ##### Requirements conflict?
  - There is a requirement to link the `Read More` button out to the appropriate IMDB page, but then followed by the requirement to dead-end all links.
-   - AR: Good pickup, just linking out to IMDB if it exists would be great. So just change 'Details' to 'Read More' as you mentioned above in the 'Design: Doesn't have a read more button' 
+   - `Arcadian:` Good pickup, just linking out to IMDB if it exists would be great. So just change 'Details' to 'Read More' as you mentioned above in the 'Design: Doesn't have a read more button' 
  - Should these also be left as dead-links or should these flow out, or should these just do something temporarily to display (alert / log / toast) info about the IMDB destination that it would have navigated to.
-   - AR: As above, just hide them if there is no ID.
+   - `Arcadian:` As above, just hide them if there is no ID.
 
 ##### Deliverable:
  - Is just sharing the resulting GitHub repo fine for this or would you prefer a Vercel mounted site or something else entirely? 
-   - AR: Repo is fine, we can run it locally. Just let us know if we need a .env or similar with an API key if required.
+   - `Arcadian:` Repo is fine, we can run it locally. Just let us know if we need a .env or similar with an API key if required.
