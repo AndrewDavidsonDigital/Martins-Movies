@@ -53,7 +53,7 @@ export default function Navigation() {
   }
   
   return (
-    <div className="w-full bg-white text-black grid-area-stack h-17 [&>a]:w-fit items-center px-7 sticky top-0 z-100">
+    <div className="w-full bg-white text-black grid-area-stack h-17 [&>a]:w-fit items-center px-7 sticky top-0 z-100 border-b border-brand/20">
       <a className="z-10" href="#">
         <Image
           className="justify-start"
@@ -133,8 +133,9 @@ function NavRoute( props: IRoute) {
             "transition-colors duration-500",
             "capitalize",
             "relative",
+            "text-white md:text-slate-500",
             'hover:text-brand cursor-pointer',
-            isActive(props, usePathname()) ? '!pointer-events-none !cursor-default text-brand underline decoration-brand' : ''
+            isActive(props, usePathname()) ? '!pointer-events-none !cursor-default !text-brand underline decoration-brand brightness-200' : ''
           )}
           onClick={() => removeScrollRoot()}
         >
