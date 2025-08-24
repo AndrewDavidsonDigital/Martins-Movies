@@ -126,6 +126,7 @@ function NavRoute( props: IRouteProps) {
     <Fragment>
       <Link
         href={props.alias ? props.alias : props.path}
+        className={`${isActive(props, usePathname()) ? '!pointer-events-none !cursor-default text-brand underline decoration-brand' : ''}`}
       >
         <button 
           key={props.path}
@@ -134,8 +135,8 @@ function NavRoute( props: IRouteProps) {
             "transition-colors duration-500",
             "capitalize",
             "relative",
-            'hover:text-emerald-700 cursor-pointer',
-            isActive(props, usePathname()) ? 'pointer-events-none text-amber-600 underline decoration-amber-600' : ''
+            'hover:text-brand cursor-pointer',
+            isActive(props, usePathname()) ? '!pointer-events-none !cursor-default text-brand underline decoration-brand' : ''
           )}
           onClick={() => removeScrollRoot()}
         >

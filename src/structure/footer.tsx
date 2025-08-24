@@ -57,7 +57,7 @@ function FooterSocials({ socials }: { socials: IFooterProps['socials'] }) {
   return (
     <div className="h-full">
       <h4 className="text-2xl font-semibold mb-10">{socials.title}</h4>
-      <p>{socials.copy}</p>
+      <p className="mb-2">{socials.copy}</p>
       <ul className="flex gap-x-3 mr-auto">
         {socials.links.facebook && (
           <li>

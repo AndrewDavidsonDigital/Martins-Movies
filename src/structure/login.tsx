@@ -1,6 +1,6 @@
 'use client'
 
-import { GlobeIcon, SearchIcon } from "@/components/icons";
+import { GlobeIcon, SearchIcon, UserIcon } from "@/components/icons";
 import { Checkbox, Input, Modal } from "@/components";
 import { IBaseModal, IBaseModalWithOpen, IBaseProps } from "@/utils/interfaces";
 import { RefObject, useRef, useState } from "react";
@@ -213,10 +213,10 @@ export default function Login(props: ILoginProps) {
         <GlobeIcon className="scale-125"/>
       </button>
       <button
-        className="rounded-sm hover:brightness-125 duration-300 transition-all bg-brand text-white font-bold px-4 py-2"
+        className="rounded-sm hover:brightness-125 duration-300 transition-all bg-brand text-white font-bold px-4 py-2 flex gap-2"
         onClick={() => handleLoginClick()}
       >
-        Login
+        <UserIcon className="scale-75"/>Login
       </button>
       
       <LoginModal 
