@@ -15,7 +15,7 @@ export function HeroBanner() {
   }
   
   return (
-    <div className="w-screen bg-red-300 text-white h-45 grid-area-stack">
+    <div className="w-screen text-white h-45 grid-area-stack">
       <div className="bg-[url(/banner.jpg)]"></div>
       <div className="bg-gradient-to-t from-violet-800/80 via-pink-800/80 to-pink-800/80 via-75% grayscale-50"></div>
       <div className="flex flex-col gap-4 max-w-[min(var(--spacing-content),90%)] w-full mx-auto my-auto z-10">
