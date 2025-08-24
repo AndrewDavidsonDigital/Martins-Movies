@@ -2,8 +2,8 @@
 
 import { ShowCard, Pagination, Input } from "@/components";
 import { API_URL_KEYWORD_IDS, API_URL_KEYWORD_IDS_BINDINGS, API_URL_MOVIE_FULL_DETAILS, API_URL_MOVIE_FULL_DETAILS_BINDINGS, API_URL_MOVIE_LISTING, apiService } from "@/utils/api";
-import { IDiscoverMoviesAPI, IKeywordsAPI, IMovie, IMovieCombinationDetail, IMovieDetailAPI,  } from "@/utils/interfaces";
-import { ChangeEvent, useEffect, useState } from "react";
+import { IDiscoverMoviesAPI, IKeywordsAPI, IMovieCombinationDetail, IMovieDetailAPI,  } from "@/utils/interfaces";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { GridIcon, ListIcon, SearchIcon } from "@/components/icons";
 import { useMovies, moviesActions } from "@/contexts";
 
@@ -32,6 +32,7 @@ export function MoviesListing() {
 
   const [isGridLayout, setGridLayout] = useState<boolean>(true);
   const filterOptions = Object.keys(FILTER_OPTIONS);
+  const SEARCH_ID = "movie_search_id";
 
   useEffect(() => {
     refreshDataWithPage();
@@ -40,21 +41,19 @@ export function MoviesListing() {
 
   const handlePageChange = (page: number) => {
     dispatch(moviesActions.setDestinationPage(page));
-    refreshDataWithPage(page);
+    refreshDataWithPage({page});
   };
 
-  async function refreshDataWithPage(page?: number) {
-    console.log(`${Date.now()}: calling refresh with page ${page || destinationPage}`)
+  async function refreshDataWithPage(config?: { page?: number, filter?: string, search?: string}) {
+    // console.log(`${Date.now()}: calling refresh with config ${JSON.stringify(config)}`)
     dispatch(moviesActions.setLoading(true));
     
     // baseline filters to exclude NSFW and tv-series??
     let selectionDetails = '?language=en-US&include_adult=false&include_video=false';
 
-    if (searchTerms.length > 0){
-      // selectionDetails +=  (`&with_keywords=${searchTerms}`).trim();
-
+    if (config?.search){
       const keywordIdsData = await apiService.get(
-        `${API_URL_KEYWORD_IDS.replaceAll(API_URL_KEYWORD_IDS_BINDINGS[0], `${searchTerms.toLowerCase()}`)}`, 
+        `${API_URL_KEYWORD_IDS.replaceAll(API_URL_KEYWORD_IDS_BINDINGS[0], `${config?.search.toLowerCase()}`)}`, 
         API_URL_KEYWORD_IDS
       );
       if (keywordIdsData.success && keywordIdsData.response){
@@ -66,14 +65,36 @@ export function MoviesListing() {
         ;
         selectionDetails +=  (`&with_keywords=${keywordsString}`);
       }
+    }else {
+      if (searchTerms.length > 0){
+        // selectionDetails +=  (`&with_keywords=${searchTerms}`).trim();
+
+        const keywordIdsData = await apiService.get(
+          `${API_URL_KEYWORD_IDS.replaceAll(API_URL_KEYWORD_IDS_BINDINGS[0], `${searchTerms.toLowerCase()}`)}`, 
+          API_URL_KEYWORD_IDS
+        );
+        if (keywordIdsData.success && keywordIdsData.response){
+          const keywordIdsAsObject = JSON.parse(keywordIdsData.response) as IKeywordsAPI;
+          const keywordsString = keywordIdsAsObject.results
+            .map(el => el.id)
+            .toSpliced(0,keywordIdsAsObject.results.length - MAX_KEYWORDS)
+            .join('|')
+          ;
+          selectionDetails +=  (`&with_keywords=${keywordsString}`);
+        }
+      }
     }
 
-    if (filterType.length > 0 && filterType !== 'Default Order'){
-      selectionDetails +=  `&${FILTER_OPTIONS[filterType as keyof typeof FILTER_OPTIONS]}`;
+    if (config?.filter){
+      selectionDetails +=  `&${FILTER_OPTIONS[config?.filter as keyof typeof FILTER_OPTIONS]}`;
+    }else {
+      if (filterType.length > 0 && filterType !== 'Default Order'){
+        selectionDetails +=  `&${FILTER_OPTIONS[filterType as keyof typeof FILTER_OPTIONS]}`;
+      }
     }
 
     // Use the passed page parameter or fall back to destinationPage from state
-    const pageToUse = page !== undefined ? page : destinationPage;
+    const pageToUse = config?.page !== undefined ? config?.page : destinationPage;
     if (pageToUse !== 0 ){
       selectionDetails +=  `&page=${pageToUse}`;
     }
@@ -129,13 +150,18 @@ export function MoviesListing() {
   }
 
   function handleSearch(){
-    console.log('Searching. . . ');
-    refreshDataWithPage(1);
+    const el = document.getElementById(SEARCH_ID);
+    let localTerm = '';
+    if (el){
+      localTerm = (el as HTMLInputElement).value;
+    }
+    refreshDataWithPage({page: 1, search: localTerm});
   }
 
   function handleFilterChange(e: ChangeEvent<HTMLSelectElement>){
-    dispatch(moviesActions.setFilterType(e.target.value));
-    refreshDataWithPage(1);
+    const val = e.target.value;
+    dispatch(moviesActions.setFilterType(val));
+    refreshDataWithPage({page: 1, filter: val});
   }
 
   return (
@@ -178,9 +204,10 @@ export function MoviesListing() {
       {/* Search bar for `keywords */}
       <div className="grid-area-stack min-w-[min(var(--spacing-content),100%)]  max-w-[min(var(--spacing-content),90%)] md:max-w-[550px] h-12 mx-auto">
         <Input
+          id={SEARCH_ID}
           className="[&>input]:pr-[calc(var(--spacing)_*_(12+2))]"
           name="listings_search"
-          placeholder="Search for Moive"
+          placeholder="Search for Movie"
           type="text"
           onKbEnter={() => handleSearch()}
           onChange={(e) => dispatch(moviesActions.setSearchTerms(e))}
@@ -194,9 +221,9 @@ export function MoviesListing() {
         </button>
       </div>
       {/* Results Display */}
-      <div className="relative">
+      <div className={`relative ${loading ? 'pointer-events-none' : ''}`}>
         {loading && (
-          <div className="absolute -inset-2 bg-white/80 backdrop-blur-sm z-100 flex items-center justify-center rounded-lg pointer-events-none">
+          <div className="absolute -inset-2 bg-white/80 backdrop-blur-sm z-100 flex items-center justify-center rounded-lg">
             <div className="flex flex-col items-center gap-4">
               <div className="w-8 h-8 border-4 border-brand border-t-transparent rounded-full animate-spin"></div>
               <p className="text-slate-600 font-medium">Loading movies...</p>
