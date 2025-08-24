@@ -1,5 +1,5 @@
 import Image from "next/image";
-import PageWrapper from "@/structure/pageWrapper";
+import PageWrapper from "@/structure/PageWrapper";
 import { HeroBanner, LinkElement } from "@/components";
 
 export default function Home() {

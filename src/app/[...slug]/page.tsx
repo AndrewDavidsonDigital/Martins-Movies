@@ -1,5 +1,5 @@
 import { HeroBanner } from "@/components";
-import PageWrapper from "@/structure/pageWrapper";
+import PageWrapper from "@/structure/PageWrapper";
 
 export default function AboutPage() {
 

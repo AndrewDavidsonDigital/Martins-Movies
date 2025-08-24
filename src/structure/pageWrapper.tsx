@@ -1,5 +1,5 @@
-import Footer, { IFooterProps } from "@/structure/footer";
-import Navigation from "@/structure/navigation";
+import Footer, { IFooterProps } from "@/structure/Footer";
+import Navigation from "@/structure/Navigation";
 import ScrollToTop from "@/structure/ScrollToTop";
 import { Fragment } from "react";
 

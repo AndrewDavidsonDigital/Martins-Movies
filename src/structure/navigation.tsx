@@ -6,7 +6,7 @@ import classNames from "classnames";
 import { usePathname } from 'next/navigation'
 import Link from "next/link";
 import Image from "next/image";
-import Login from "@/structure/login";
+import Login from "@/structure/Login";
 import { IBaseProps } from "@/utils/interfaces";
 import { MenuIcon } from "@/components/icons";
 

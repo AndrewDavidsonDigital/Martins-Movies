@@ -1,5 +1,5 @@
 import { HeroBanner } from "@/components";
-import PageWrapper from "@/structure/pageWrapper";
+import PageWrapper from "@/structure/PageWrapper";
 import { MoviesListing } from "./MoviesListing";
 
 export default function MoviesListPage() {
