@@ -1,9 +1,4 @@
-export interface IRoute {
-  name: string;
-  alias?: string;
-  path: string;
-}
-
+import { IRoute } from "@/utils/interfaces";
 
 export const staticRoutes: Array<IRoute> = [
   {
@@ -24,17 +19,3 @@ export const staticRoutes: Array<IRoute> = [
     path: '/contact-us',
   },
 ]
-
-export function resolveRouteFromPath(path: string): IRoute| undefined {
-  if (path === "Home") return staticRoutes.find(el => el.name === "Home");
-
-  return staticRoutes.find(el => el.path === path);
-}
-export function resolveRoutePath(currentRoute: IRoute): Array<string> {
-  if (currentRoute.name === "Home") return ['Home'];
-  
-  const retval: Array<string> = currentRoute.path.split("/");
-  retval[0] = "Home";
-
-  return retval;
-}

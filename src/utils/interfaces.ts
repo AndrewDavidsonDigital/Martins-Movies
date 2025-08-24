@@ -126,3 +126,10 @@ export interface IBaseModal {
 export interface IBaseModalWithOpen {
   onOpenModal: (modalRef: RefObject<HTMLDialogElement | null>) => void;
 }
+
+
+export interface IRoute {
+  name: string;
+  alias?: string;
+  path: string;
+}
