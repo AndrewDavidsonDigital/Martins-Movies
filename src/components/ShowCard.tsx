@@ -125,14 +125,14 @@ export function ShowCard(props: IShowCardProps) {
               ${! (props.isGrid) ?  'md:group-hover:scale-100 md:scale-0 md:absolute md:mb-auto md:mr-auto md:ml-[-25%] md:mt-22' : '' }
             `}
             onClick={() => toggleOpenVideo('https://youtu.be/Q0CbN8sfihY')}
-            // video / trailer should be sourced directly from the
+            // video / trailer should be sourced directly from the data but currently not in value
           >
             <span className='rotate-90 text-white'>▲</span>
           </button>
         )}
-        <h3 className={`text-3xl ${! (props.isGrid) ?  'md:w-fit md:mx-auto md:text-center' : ''}`}>{props.title}</h3>
+        <h3 className={`text-3xl font-semibold tracking-tight ${! (props.isGrid) ?  'md:w-fit md:mx-auto md:text-center' : ''}`}>{props.title}</h3>
         { !(props.isGrid) && (
-          <GenresDisplay genres={props.genres} className='mx-auto opacity-75' />
+          <GenresDisplay genres={props.genres} className='mx-auto opacity-75 text-sm' />
         )}
         <div 
           className={`
@@ -140,18 +140,19 @@ export function ShowCard(props: IShowCardProps) {
             ${props.isGrid ? '' : 'md:hidden' }
           `}
         >
-          <span>✨{formatRating(props.vote_average)}</span>
-          <GenresDisplay genres={props.genres} />
+          <span className="font-medium text-sm">✨{formatRating(props.vote_average)}</span>
+          <GenresDisplay genres={props.genres} className="text-sm opacity-80" />
         </div>
-        <p className={`line-clamp-5 text-neutral-500 ${! (props.isGrid) ? 'text-center' : '' }`}>
+        <p className={`line-clamp-5 text-neutral-500 text-sm leading-relaxed ${! (props.isGrid) ? 'text-center' : '' }`}>
           {props.overview}
         </p>
         {props.imdb_id && (
           <a 
             className={`
               uppercase
+              font-medium tracking-wide
               hover:brightness-125
-              hover:bg-brand/90 hover:!text-white border border-slate-600 bg-brand/80 text-white 
+              hover:bg-brand/90 hover:!text-white bg-brand/80 text-white 
               w-fit 
               py-2 px-4 
               mr-auto text-sm rounded-sm duration-300 transition-all

@@ -166,7 +166,7 @@ export function MoviesListing() {
 
   return (
     <div className="mt-24 max-w-[min(var(--spacing-content),90%)] w-[min(var(--spacing-content),90%)] flex flex-col gap-8 mb-32">
-      <div className="flex flex-col sm:flex-row sm:justify-between gap-4">
+      <div className="flex flex-row justify-between gap-4">
         {/* Layout selector */}
         <div className="flex gap-2">
           <button 
