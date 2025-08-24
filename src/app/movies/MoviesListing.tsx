@@ -1,6 +1,6 @@
 "use client"
 
-import { ShowCard, Pagination, Input, MoviesStatus } from "@/components";
+import { ShowCard, Pagination, Input } from "@/components";
 import { API_URL_KEYWORD_IDS, API_URL_KEYWORD_IDS_BINDINGS, API_URL_MOVIE_FULL_DETAILS, API_URL_MOVIE_FULL_DETAILS_BINDINGS, API_URL_MOVIE_LISTING, apiService } from "@/utils/api";
 import { IDiscoverMoviesAPI, IKeywordsAPI, IMovie, IMovieCombinationDetail, IMovieDetailAPI,  } from "@/utils/interfaces";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -34,11 +34,17 @@ export function MoviesListing() {
   const filterOptions = Object.keys(FILTER_OPTIONS);
 
   useEffect(() => {
-    refreshData();
+    refreshDataWithPage();
   },[]);
 
-  async function refreshData(){
-    console.log(`${Date.now()}: calling refresh`)
+
+  const handlePageChange = (page: number) => {
+    dispatch(moviesActions.setDestinationPage(page));
+    refreshDataWithPage(page);
+  };
+
+  async function refreshDataWithPage(page?: number) {
+    console.log(`${Date.now()}: calling refresh with page ${page || destinationPage}`)
     dispatch(moviesActions.setLoading(true));
     
     // baseline filters to exclude NSFW and tv-series??
@@ -66,8 +72,10 @@ export function MoviesListing() {
       selectionDetails +=  `&${FILTER_OPTIONS[filterType as keyof typeof FILTER_OPTIONS]}`;
     }
 
-    if (destinationPage !== 0 ){
-      selectionDetails +=  `&page=${destinationPage}`;
+    // Use the passed page parameter or fall back to destinationPage from state
+    const pageToUse = page !== undefined ? page : destinationPage;
+    if (pageToUse !== 0 ){
+      selectionDetails +=  `&page=${pageToUse}`;
     }
 
     selectionDetails = selectionDetails.replaceAll(' ','%20');
@@ -120,19 +128,14 @@ export function MoviesListing() {
     }
   }
 
-  const handlePageChange = (page: number) => {
-    dispatch(moviesActions.setDestinationPage(page));
-    refreshData();
-  };
-
   function handleSearch(){
     console.log('Searching. . . ');
-    refreshData();
+    refreshDataWithPage(1);
   }
 
   function handleFilterChange(e: ChangeEvent<HTMLSelectElement>){
     dispatch(moviesActions.setFilterType(e.target.value));
-    refreshData();
+    refreshDataWithPage(1);
   }
 
   return (
@@ -193,13 +196,22 @@ export function MoviesListing() {
       {/* Results Display */}
       <div className="relative">
         {loading && (
-          <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-100 flex items-center justify-center rounded-lg pointer-events-none">
+          <div className="absolute -inset-2 bg-white/80 backdrop-blur-sm z-100 flex items-center justify-center rounded-lg pointer-events-none">
             <div className="flex flex-col items-center gap-4">
               <div className="w-8 h-8 border-4 border-brand border-t-transparent rounded-full animate-spin"></div>
               <p className="text-slate-600 font-medium">Loading movies...</p>
             </div>
           </div>
         )}
+        {/* Pagination */}
+        <div className="mb-8">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={(e) => handlePageChange(e)}
+          />
+        </div>
+        {/* display */}
         <div 
           className={`
             grid gap-8
@@ -211,16 +223,16 @@ export function MoviesListing() {
             <ShowCard {...cardData} key={`show_card_${cardData.id}`} isGrid={isGridLayout} hasVideo={index === 0}/>
           ))}
         </div>
+        {/* Pagination */}
+        <div>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={(e) => handlePageChange(e)}
+            className="mt-8"
+          />
+        </div>
       </div>
-      <div>
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-          className="mt-8"
-        />
-      </div>
-      {/* Pagination */}
     </div>
   );
 }
