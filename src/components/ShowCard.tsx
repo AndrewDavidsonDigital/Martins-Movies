@@ -1,6 +1,10 @@
 'use client'
 
-import { IMovieCombinationDetail } from '@/utils/interfaces';
+import { IBaseModal, IMovieCombinationDetail } from '@/utils/interfaces';
+import { Modal } from './Modal';
+import { closeModal, openModal } from '@/utils/modal';
+import { useRef, useState } from 'react';
+import { getYouTubeEmbedUrl } from '@/utils/string';
 
 interface IShowCardProps extends IMovieCombinationDetail{
   isGrid: boolean;
@@ -8,6 +12,17 @@ interface IShowCardProps extends IMovieCombinationDetail{
 }
 
 export function ShowCard(props: IShowCardProps) {
+
+  const modalVideo = useRef<HTMLDialogElement>(null);
+  const [videoSrc, setVideoSrc] = useState<string>('');
+
+
+  function toggleOpenVideo(videoSrc: string){
+    setVideoSrc(old => videoSrc);
+    if (modalVideo.current){
+      openModal(modalVideo);
+    }
+  }
   
   return (
     <div 
@@ -83,6 +98,8 @@ export function ShowCard(props: IShowCardProps) {
               grid-area-stack items-center
               ${! (props.isGrid) ?  'md:group-hover:scale-100 md:scale-0 md:absolute md:mb-auto md:mr-auto md:ml-[-25%] md:mt-22' : '' }
             `}
+            onClick={() => toggleOpenVideo('https://youtu.be/Q0CbN8sfihY')}
+            // video / trailer should be sourced directly from the
           >
             <span className='rotate-90 text-white'>▲</span>
           </button>
@@ -111,6 +128,35 @@ export function ShowCard(props: IShowCardProps) {
           >Read More</a>
         )}
       </div>
+      <VideoModal
+        modalRef={modalVideo}
+        onClose={() => closeModal(modalVideo)}
+        src={`${videoSrc}`}
+      />
     </div>
+  );
+}
+
+function VideoModal(props: IBaseModal & { src: string }) {
+  const embedUrl = getYouTubeEmbedUrl(props.src);
+  
+  return (
+    <Modal
+      modalRef={props.modalRef}
+      onClose={props.onClose}
+      size="lg"
+      borderless
+    >
+      <div className="w-full h-96">
+        <iframe 
+          src={embedUrl}
+          className="w-full h-full rounded-md"
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        />
+      </div>
+    </Modal>
   );
 }
