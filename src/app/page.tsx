@@ -1,4 +1,3 @@
-import Image from "next/image";
 import PageWrapper from "@/structure/PageWrapper";
 import { HeroBanner } from "@/components";
 import Link from "next/link";
