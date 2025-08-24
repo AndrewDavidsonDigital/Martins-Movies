@@ -11,9 +11,23 @@ interface IShowCardProps extends IMovieCombinationDetail{
   hasVideo: boolean;
 }
 
+  function GenresDisplay({ genres, className }: { genres: Array<{ id: number; name: string }>; className?: string }) {
+  const displayGenres = genres.toSpliced(0, genres.length - 2);
+  
+  return (
+    <span className={className}>
+      {displayGenres.map((genre, genreIndex) => (
+        <span key={genre.id}>
+          {genre.name}{genreIndex < displayGenres.length - 1 ? ', ' : ''}
+        </span>
+      ))}
+    </span>
+  );
+}
+
 export function ShowCard(props: IShowCardProps) {
 
-  const modalVideo = useRef<HTMLDialogElement>(null);
+  const modalVideo = useRef<HTMLDialogElement | null>(null);
   const [videoSrc, setVideoSrc] = useState<string>('');
 
 
@@ -105,6 +119,9 @@ export function ShowCard(props: IShowCardProps) {
           </button>
         )}
         <h3 className={`text-3xl ${! (props.isGrid) ?  'md:w-fit md:mx-auto md:text-center' : ''}`}>{props.title}</h3>
+        { !(props.isGrid) && (
+          <GenresDisplay genres={props.genres} className='mx-auto opacity-75' />
+        )}
         <div 
           className={`
             flex justify-between text-slate-600/60
@@ -112,7 +129,7 @@ export function ShowCard(props: IShowCardProps) {
           `}
         >
           <span>✨{(props.vote_average).toFixed(1)}/10</span>
-          <span></span>
+          <GenresDisplay genres={props.genres} />
         </div>
         <p className={`line-clamp-5 ${! (props.isGrid) ? 'text-neutral-500 text-center' : '' }`}>
           {props.overview}
@@ -120,8 +137,14 @@ export function ShowCard(props: IShowCardProps) {
         {props.imdb_id && (
           <a 
             className={`
-              hover:bg-brand/90 hover:!text-white border border-slate-600 uppercase bg-brand/80 text-white w-fit mr-auto py-2 px-4 text-sm rounded-sm hover:brightness-125 duration-300 transition-all
-              ${! (props.isGrid) ?  'md:mx-auto mt-auto' : ''}
+              uppercase
+              hover:brightness-125
+              hover:bg-brand/90 hover:!text-white border border-slate-600 bg-brand/80 text-white 
+              w-fit 
+              py-2 px-4 
+              mr-auto text-sm rounded-sm duration-300 transition-all
+              mt-auto
+              ${! (props.isGrid) ?  'md:mx-auto' : ''}
             `}
             href={`https://www.imdb.com/title/${props.imdb_id}/`}
             target='_blank'
