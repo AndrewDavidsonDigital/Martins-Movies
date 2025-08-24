@@ -84,6 +84,8 @@ export function ShowCard(props: IShowCardProps) {
             alt={`${props.title}'s poster`}
             src={`/placeholder-image.jpg`}
             className='w-full h-auto min-h-20 object-contain'
+            width={100}
+            height={100}
           />
         )}
       </div>
