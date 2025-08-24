@@ -1,0 +1,1 @@
+export { MoviesProvider, useMovies, moviesActions } from './MoviesContext';

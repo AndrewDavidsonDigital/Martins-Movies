@@ -1,12 +1,14 @@
 import { Fragment } from 'react';
+import { MoviesProvider } from '@/contexts';
+
 export default function DefaultLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <Fragment>
+    <MoviesProvider>
       {children}
-    </Fragment>
+    </MoviesProvider>
   )
 }
