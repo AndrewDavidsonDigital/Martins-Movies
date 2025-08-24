@@ -1,173 +1,204 @@
-[toc]
+## Arcadian Digital - Martin's Movies Platform
 
-## Description
+[![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js)](https://nextjs.org/) [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/) [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-22.17+-339933?style=for-the-badge&logo=node.js)](https://nodejs.org/) [![Yarn](https://img.shields.io/badge/Yarn-4.9+-2C8EBB?style=for-the-badge&logo=yarn)](https://yarnpkg.com/)
 
-This site is a technical task, see  [Requirements.md](./Requirements.md), bootstrapped from [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app) and [`TailwindCSS v4`](https://tailwindcss.com/).
+A modern movie discovery platform built with Next.js 14, Tailwind CSS v4, and TypeScript. This project demonstrates a complete movie listing application with search, filtering, and responsive design capabilities.
 
-## Versions
+### 📋 Table of Contents
 
-| Version | Date | Notes |
-| ----------- | ----------- | ----------- | 
-| `1.0.0` | 2025-08-24 | Task completion and ready for submission |
-| `0.2.0` | 2025-08-24 | First pass of completion done, First pass of this readme |
-| `0.1.0` | 2025-08-23 | Initial dev from design layout and page structures |
-| `0.0.0` | 2025-08-23 | Initial fork from my local NextJS quickstart |
+- [Quick Start](#quick-start)
+- [Description](#description)
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+- [API Integration](#api-integration)
+- [Project Structure](#project-structure)
+- [Known Issues](#known-issues)
+- [Version History](#version-history)
 
+### 🚀 Quick Start
 
-## Build Requirements
-
-| Thing | Version | Reasoning |
-| ----------- | ----------- | ----------- | 
-| Yarn | 4.9.Y +  | Compilation |
-| Node | 22.17.Y +  | Compilation |
-| Browser (Chrome) | 126.0.X.Y +  | Runtime |
-| Browser (Firefox) | 128.0 +  | Runtime |
-
-
-## Getting Started
-
-Create your own [.env](.env) file with the following structure:
 ```bash
-NEXT_PUBLIC_TMDB_API_TOKEN={YOUR_KEY_GOES_HERE}
+# Clone and install
+git clone <repository-url>
+cd ArcadianDigital
+yarn install
+
+# Set up environment
+cp .env.example .env
+# Edit .env with your TMDB API token
+
+# Start development server
+yarn dev
 ```
 
-First, run the development server:
+Visit [http://localhost:3000](http://localhost:3000) to see the application.
 
-For a local dev instance:
+### 📖 Description
+
+This site is a technical task, see [Requirements.md](./Requirements.md), bootstrapped from [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app) and [`TailwindCSS v4`](https://tailwindcss.com/).
+
+### ✨ Features
+
+### ✅ Included Features
+- **Movie Discovery**: Browse movies with pagination
+- **Advanced Search**: Search movies by title and keywords
+- **Smart Filtering**: Multiple filter options (Featured, Top Rated, Newest, etc.)
+- **Responsive Design**: Grid and List view modes
+- **External Links**: Direct links to IMDB pages
+- **Trailer Modal**: Video player for movie trailers
+- **Authentication UI**: Sign-in, Sign-up, and Password reset forms
+- **Mobile Navigation**: Responsive mobile menu
+- **Loading States**: User feedback during data fetching
+
+### 🔄 Planned Enhancements
+- **Improved Loading States**: Minimum display time to prevent flashing
+- **Modal Refactoring**: Centralized modal management
+- **Better Mobile Navigation**: Enhanced mobile experience
+- **Critical CSS**: Performance optimizations
+
+### ❌ Excluded Features
+- Critical CSS / Splash Screen
+- Authentication logic
+- Footer/Header content management
+
+### 🛠️ Requirements
+
+| Component | Version | Purpose |
+|-----------|---------|---------|
+| **Yarn** | 4.9+ | Package management and compilation |
+| **Node.js** | 22.17+ | Runtime environment |
+| **Chrome** | 126.0+ | Primary browser support |
+| **Firefox** | 128.0+ | Secondary browser support |
+
+### 🚀 Installation
+
+### 1. Environment Setup
+
+Create a `.env` file in the project root:
+
 ```bash
-# First Run
+# TMDB API Bearer Token (not API key)
+NEXT_PUBLIC_TMDB_API_TOKEN=your_bearer_token_here
+```
+
+### 2. Development
+
+```bash
+# First time setup
 yarn install && yarn dev
 
-# consecutive runs
+# Subsequent runs
 yarn boot
 ```
 
-For a local Build:
-```bash
-# First Run
-yarn install && yarn next build && yarn next serve
+### 3. Production Build
 
-# consecutive runs
+```bash
+# First time build
+yarn install && yarn next build && yarn next start
+
+# Subsequent runs
 yarn preview
 ```
 
-Both instances will be mounted to `port:3000` [http://localhost:3000](http://localhost:3000).
+Both instances run on [http://localhost:3000](http://localhost:3000).
 
-## Usage
+### 📱 Usage
 
-As the scope is only for the listings page, that is the only one that really has any content. The other entries are purely to catch all other routes (as there are a bunch in the design) and have those pages, via copy, direct you to the `/movies` route.
+The application focuses on the movie listings page (`/movies`). Other routes direct the users to the main movie discovery interface.
 
-## Branding
-- Fonts: are defined and loaded via Next, and wired into tailwind within [tailwind-additions.css](/src/style/tailwind-additions.css)
-- Colours: The brand colour is defined in [tailwind-additions.css](/src/style/tailwind-additions.css) as `brand` allowing for usage of `text-brand` and `bg-brand/80` etc.
-- Name & Logo: as I don't have these assets and that this is purely a proof of competency I have just left these with the ones within the design. These would be swapped out with data pulled either from a CMS or at compile time from a custom `.env` value.
+### View Modes
+- **Grid View**: Default card-based layout
+- **List View**: Compact list layout with movie details
 
-## Features - Included
+### Filtering Options
+- **Default**: No additional filtering
+- **Featured**: Current year releases by revenue
+- **Top Viewed**: By popularity
+- **Top Rated**: By vote average
+- **Newest**: By release date (descending)
+- **Oldest**: By release date (ascending)
 
-- Default Movies listing
-- Movies Search 
-- Movies Filters
-- Display as Grid
-- Display as List
-- External Link out to the movies IMDB page if we know its id.
-- Modal to play trailer (as per design), if the api should provide it.
-  - Currently hard-coded that the only the 1st displayed movie should 
-- Pagination
-- Sign-In Form
-   - UI Structure only
-- Sign-Up Form
-   - UI Structure only
-- Forgotten Password Form
-   - UI Structure only
+### 🔌 API Integration
 
-- Basic Loading states
-- Basic Mobile nav
+The application integrates with The Movie Database (TMDB) API through three main endpoints:
+
+### 1. **Discover Movies** (`/discover/movie`)
+- Returns 20 movies per page
+- Supports filtering and sorting
+- Includes adult content filtering for SFW experience - effectiveness of this is open for debate.
+
+### 2. **Movie Details** (`/movie/{id}`)
+- Retrieves comprehensive movie information
+- Provides genre details and IMDB IDs
+
+### 3. **Keyword Search** (`/search/keyword`)
+- Enables intelligent search functionality
+- Returns relevant keyword bindings for enhanced search
+
+### ⚠️ API Limitations
+- Some recent movies may not be properly tagged for adult content
+- Page 3+ may contain content requiring discretion
+- API pagination behavior may show duplicate entries across pages
+
+### 🏗️ Project Structure
+
+```
+src/
+├── app/                    # Next.js App Router
+│   ├── movies/            # Movie listing page
+│   ├── [...slug]/         # Dynamic route handling
+│   └── layout.tsx         # Root layout
+├── components/             # Reusable UI components
+│   ├── icons/             # SVG icon library
+│   ├── ButtonElement.tsx  # Button component
+│   ├── ShowCard.tsx       # Movie card component
+│   └── Modal.tsx          # Modal dialog
+├── contexts/               # React context providers
+│   └── MoviesContext.tsx  # Movie state management
+├── structure/              # Layout components
+│   ├── Navigation.tsx     # Main navigation
+│   ├── Footer.tsx         # Footer component
+│   └── PageWrapper.tsx    # Page layout wrapper
+├── utils/                  # Utility functions
+│   ├── api.ts             # API integration
+│   ├── interfaces.ts      # TypeScript interfaces
+│   └── string.ts          # String utilities
+├── style/                  # Styling and CSS
+│   ├── tailwind-additions.css  # Custom Tailwind utilities
+│   └── main.css           # Main stylesheet
+└── types/                  # TypeScript definitions
+    └── global.d.ts        # Global type declarations
+```
+
+### 🎨 Branding & Styling
+
+- **Fonts**: Loaded via Next.js and integrated with Tailwind
+- **Colors**: Brand color defined as `brand` in Tailwind utilities
+- **Customization**: Extensible through `tailwind-additions.css`
+- **Responsive**: Mobile-first design approach
+
+### ⚠️ Known Issues
+
+1. **Content Filtering**: Some movies from page 3+ may contain adult content
+2. **Loading States**: Brief flashing when navigating to cached content
+3. **Modal Management**: Each card has its own modal instance (planned refactor)
+4. **API Pagination**: Duplicate entries may appear across page boundaries
+
+### 📅 Version History
+
+| Version | Date | Description |
+|---------|------|-------------|
+| `1.0.0` | 2025-08-24 | Task completion and ready for submission |
+| `0.2.0` | 2025-08-24 | First pass of completion and README |
+| `0.1.0` | 2025-08-23 | Initial development and page structures |
+| `0.0.0` | 2025-08-23 | Initial fork from NextJS quickstart |
 
 
-## Features - Excluded
-- Mobile Navigation:
-  - Mobile Nav is substantially less ideal than where I'd want this to be.
-- Login / Sign-in / Sign-up forms:
-  - These have no logic or proper state management at the moment as I feel these are out of scope for the task (i.e. these are nav related not listing page related)
-- Loading states:
-  - these are quite basic at the moment and when the data is readily available (i.e. cached), traversing to a cached one gives a spiky flash which really should not be there. i.e. there should be a minimum display time of say 0.7s on the loading state
+### 📄 License
 
-
-## Logic Flow
-
-So to get the data we require to serve the requirements we need to hook into 3 different apis:
-- [Discover-Movie](https://developer.themoviedb.org/reference/discover-movie) - This end point is the basic entry point to get a small-detail section of a collection (which is filterable) of movies.
-  - This api only ever returns `20` results and as far as I can tell there isn't a way to limit this to 6 to match designs./
-  - `Note:` I am trying to keep is as `SFW` as possible by always include the filterStrings `language=en-US&include_adult=false&include_video=false` but not all `NFSW` content / posters and correctly flagged in the db.
-    - as of 2025-08-24 the `Default` (non filtered via dropdown content) starts getting ...questionable from page 3, you have been warned / informed ;) 
-- [Movie-Details](https://developer.themoviedb.org/reference/movie-details) - This is your standard `getMovieById` end-point where we resolve all our missing data:
-  - currently this is `genre details`, `imdb_id`.
-- [Keywords-Search](https://developer.themoviedb.org/reference/search-keyword) - This endpoint returns a collection of keyword objects `{ name: string; id: number}` ordered by their relevance / closeness to the string passed to it. (i.e: string hero will return bindings for both "hero", "super hero", and like ~130 more)
-  - as passing all of these from our search string to the discovers api is overkill and redundant, the site currently takes up to 5 first (most relevant) bindings and uses those when searching with keywords.
-
-### Filters:
-Currently this site supports the following bindings:
-- `Default Order` - no extra filtering applied
-- `Featured` - sorts by revenue in descending order for current year releases 
-  - `sort_by=revenue.desc&primary_release_year=2025`
-- `Top Viewed` - sorts by popularity in descending order 
-  - `sort_by=popularity.desc`
-- `Top Rated` - sorts by vote average in descending order 
-  - `sort_by=vote_average.desc`
-- `Newest` - sorts by primary release date in descending order 
-  - `sort_by=primary_release_date.desc`
-- `Oldest` - sorts by primary release date in ascending order 
-  - `sort_by=primary_release_date.asc`
-
-
-## Structure
-
-The project uses a Next.js 14 App Router structure with the following key directories under `src`:
-
-### `/app/`
-- **`page.tsx`** - Landing page - no content other than copy directing to `/movies`
-- **`[...slug]/`** - Dynamic route handling for all pages other than `/movies`  - no content other than copy directing to `/movies`
-- **`layout.tsx`** - Root layout component
-- **`globals.ts`** - Global styles and configurations
-- **`routes.ts`** - Application routing configuration information - would usually be pulled from a CMS
-- **`movies/`** - Movie-specific page for the task itself
-
-### `/components/`
-Reusable UI components including:
-- **`ButtonElement.tsx`** - Button component
-- **`Input.tsx`** - Form input component
-- **`Modal.tsx`** - Modal dialog component
-- **`ShowCard.tsx`** - Card component for displaying shows/movies
-- **`HeroBanner.tsx`** - Hero banner component
-- **`icons/`** - SVG icon components (Facebook, Twitter, Instagram, etc.)
-
-### `/contexts/`
-React context providers:
-- **`MoviesContext.tsx`** - State management for movie data
-
-### `/structure/`
-Layout and structural components that should only be used within the `Layout`'s:
-- **`Navigation.tsx`** - Main navigation component
-- **`Footer.tsx`** - Footer component
-- **`PageWrapper.tsx`** - Page layout wrapper
-- **`Login.tsx`** - Authentication component
-
-### `/utils/`
-Utility functions and helpers:
-- **`api.ts`** - API integration functions
-- **`cn.ts`** - Class name utility for global registration of `cn` so we aren't importing this on every server component.
-- **`interfaces.ts`** - Shared TypeScript interfaces
-- **`modal.ts`** - Modal utility functions
-- **`string.ts`** - Custom String manipulation methods
-
-### `/style/`
-Styling and CSS:
-- **`main.css`** - Main stylesheet - Should only be a table-of-contents
-- **`custom.css`** - Custom CSS overrides - base css only
-- **`tailwind-additions.css`** - Additional Tailwind utilities - our tailwind customisation area.
-- **`tailwind-safelist.css`** - Tailwind CSS Safelist - separated file to house all our safelisting rules.
-
-### `/types/`
-TypeScript type definitions:
-- **`global.d.ts`** - Global type declarations
+This project is created for technical assessment purposes. Please refer to the project requirements for usage guidelines.
 
