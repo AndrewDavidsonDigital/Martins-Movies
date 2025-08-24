@@ -38,12 +38,16 @@ function AnimatedMenuIcon({ isOpen }: AnimatedMenuIconProps) {
   );
 }
 
+function removeScrollRoot(){
+  document.getElementById('scrollRoot')?.classList.remove('overflow-clip')
+}
+
 export default function Navigation() {
   const [isMobileNavOpen, setMobileNavOpen]  = useState<boolean>(false);
 
   function handleMobileNavClick(){
     if(isMobileNavOpen){
-      document.getElementById('scrollRoot')?.classList.remove('overflow-clip');
+      removeScrollRoot();
     }else{
       document.getElementById('scrollRoot')?.classList.add('overflow-clip');
     }
@@ -133,6 +137,7 @@ function NavRoute( props: IRouteProps) {
             'hover:text-emerald-700 cursor-pointer',
             isActive(props, usePathname()) ? 'pointer-events-none text-amber-600 underline decoration-amber-600' : ''
           )}
+          onClick={() => removeScrollRoot()}
         >
           {props.name}
         </button>
