@@ -103,7 +103,7 @@ function FooterSocials({ socials }: { socials: IFooterProps['socials'] }) {
 // Local component for footer links
 function FooterCopyright() {
   return (
-    <div className="flex flex-col lg:flex-row justify-between max-w-[min(var(--spacing-content),80%)] mx-auto w-full">
+    <div className="flex flex-col lg:flex-row justify-between max-w-[min(var(--spacing-content),90%)] mx-auto w-full">
       <ul className="flex justify-center gap-x-5 gap-y-2 flex-wrap">
         <li className=""><a href="#">Privacy &amp; Cookies</a></li>
         <li className=""><a href="#">Terms &amp; Conditions</a></li>
@@ -131,7 +131,7 @@ export default function Footer(props: IFooterProps) {
           grid-cols-1 md:grid-cols-[repeat(2,50%)] lg:grid-cols-[repeat(4,min(260px,25%))] 
           items-center justify-center
           mx-auto
-          max-w-[min(var(--spacing-content),80%)]
+          max-w-[min(var(--spacing-content),90%)]
         "
       >
         <div className="flex flex-col">

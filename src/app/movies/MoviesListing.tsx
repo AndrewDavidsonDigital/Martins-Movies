@@ -136,8 +136,7 @@ export function MoviesListing() {
   }
 
   return (
-    <div className="mt-24 max-w-[min(var(--spacing-content),80%)] w-[min(var(--spacing-content),80%)] flex flex-col gap-8 mb-32">
-      <MoviesStatus />
+    <div className="mt-24 max-w-[min(var(--spacing-content),90%)] w-[min(var(--spacing-content),90%)] flex flex-col gap-8 mb-32">
       <div className="flex flex-col sm:flex-row sm:justify-between gap-4">
         {/* Layout selector */}
         <div className="flex gap-2">
@@ -174,7 +173,7 @@ export function MoviesListing() {
         </select>
       </div>
       {/* Search bar for `keywords */}
-      <div className="grid-area-stack min-w-[min(var(--spacing-content),100%)]  max-w-[min(var(--spacing-content),80%)] md:max-w-[550px] h-12 mx-auto">
+      <div className="grid-area-stack min-w-[min(var(--spacing-content),100%)]  max-w-[min(var(--spacing-content),90%)] md:max-w-[550px] h-12 mx-auto">
         <Input
           className="[&>input]:pr-[calc(var(--spacing)_*_(12+2))]"
           name="listings_search"

@@ -19,7 +19,7 @@ export function HeroBanner() {
     <div className="w-screen bg-red-300 text-white h-45 grid-area-stack">
       <div className="bg-[url(/banner.jpg)]"></div>
       <div className="bg-gradient-to-t from-violet-800/80 via-pink-800/80 to-pink-800/80 via-75% grayscale-50"></div>
-      <div className="flex flex-col gap-4 max-w-[min(var(--spacing-content),80%)] w-full mx-auto my-auto z-10">
+      <div className="flex flex-col gap-4 max-w-[min(var(--spacing-content),90%)] w-full mx-auto my-auto z-10">
         <h3 className='text-4xl'>{routeConfig?.name}</h3>
         <div className="flex gap-2 text-base font-light">
           {routeStruct.length > 1 && routeStruct.map((segment, segIndex) => (
