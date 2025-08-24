@@ -1,5 +1,4 @@
 // Elements
-export { Tooltip } from "@/components/Tooltip";
 export { LinkElement } from "@/components/LinkElement";
 export { ButtonElement } from "@/components/ButtonElement";
 export { Checkbox } from "@/components/Checkbox";
