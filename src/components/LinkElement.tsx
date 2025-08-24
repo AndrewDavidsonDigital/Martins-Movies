@@ -1,33 +1,27 @@
-import { ReactNode } from 'react';
+import { IBaseProps } from '@/utils/interfaces';
 
-interface LinkProps {
-  children?: ReactNode;
-  destination: string;
-  isOffsite?: boolean;
-  isInverted?: boolean;
-  copy: string;
+interface ILinkElement extends IBaseProps{
+  label: string;
+  isExternal?: boolean;
+  href: string;
 }
 
-export function LinkElement(props: LinkProps) {
+export function LinkElement(props: ILinkElement) {
   return (
-    <a
-      className={cn(
-        "rounded-full border border-solid border-transparent",
-        "transition-colors",
-        "flex items-center justify-center",
-        "font-medium text-sm sm:text-base",
-        "h-10 sm:h-12 w-fit",
-        props.isInverted ? 
-          "border-black/[.08] dark:border-white/[.145] hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent" : 
-          "hover:bg-[#383838] dark:hover:bg-[#ccc] bg-foreground text-background",
-        props.children ? "gap-2 px-4 sm:px-5" : "px-5 sm:px-6"
-      )}
-      href={props.destination}
-      target={props.isOffsite ? "_blank" : "_self"}
-      rel="noopener noreferrer"
-  >
-    { props.children }
-    { props.copy }
-  </a>
+    <a 
+    className={`
+      uppercase
+      font-medium tracking-wide
+      hover:brightness-125
+      hover:bg-brand/90 hover:!text-white bg-brand/80 text-white 
+      w-fit 
+      py-2 px-4 
+      mr-auto text-sm rounded-sm duration-300 transition-all
+      mt-auto
+      ${props.className}
+    `}
+    href={props.href}
+    target={props?.isExternal ? '_blank' : 'none'}
+  >{props.label}</a>
   );
 }

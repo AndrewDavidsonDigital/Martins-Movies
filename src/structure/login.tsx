@@ -10,6 +10,34 @@ interface ILoginProps extends IBaseProps {
   alerts?: number;
 }
 
+interface IModalFormButton extends IBaseProps{
+  label: string;
+}
+
+function ModalFormButton (props: IModalFormButton) {
+  return (
+    <button 
+      type="submit" 
+      className={`uppercase bg-brand/80 text-white w-fit mr-auto py-2 px-4 text-sm rounded-sm hover:brightness-125 duration-300 transition-all ${props.className}`}
+    >{props.label}</button>
+  )
+}
+
+interface IModalFooterButton extends IBaseProps{
+  onClick: () => void;
+  label: string;
+}
+
+function ModalFooterButton (props: IModalFooterButton) {
+  return (
+    <button 
+      className={`text-brand hover:!text-black ${props.className}`}
+      onClick={() => props.onClick()}
+    >{props.label}
+    </button>
+  )
+}
+
 // Local modal components
 // other modals included here as we need to hook into those too
 interface ModalProps extends IBaseModal, IBaseModalWithOpen {
@@ -69,12 +97,21 @@ function LoginModal({ modalRef, onClose, onOpenModal, modalSignup, modalForgotte
           onChange={(value) => handleInputChange('keepSignedIn', value)}
         />
         <div className="w-full flex flex-col gap-2 mb-4 ">
-          <button type="submit" className="uppercase bg-brand/80 text-white w-fit mr-auto py-2 px-4 text-sm rounded-sm hover:brightness-125 duration-300 transition-all" >Sign In</button>
+          <ModalFormButton label="Sign In" />
         </div>
       </form>
       <div className="flex justify-between">
-        <p>Not a member? <button className="text-brand hover:!text-black" onClick={() => { onClose(); onOpenModal(modalSignup);}}>Sign up</button></p>
-        <p><button className="text-brand hover:!text-black" onClick={() => { onClose(); onOpenModal(modalForgotten);}}>Forgot Password</button></p>
+        <p>Not a member? 
+          <ModalFooterButton
+            onClick={() => { onClose(); onOpenModal(modalSignup);}}
+            label="Sign up"
+            className="pl-[1ch]"
+          />
+        </p>
+        <ModalFooterButton
+          onClick={() => { onClose(); onOpenModal(modalForgotten);}}
+          label="Forgot Password"
+        />
       </div>
     </Modal>
   );
@@ -111,11 +148,14 @@ function ForgottenPasswordModal({ modalRef, onClose, onOpenModal, modalLogin }: 
           required
         />
         <div className="w-full flex flex-col gap-2 mb-4 ">
-          <button type="submit" className="uppercase bg-brand/80 text-white w-fit mr-auto py-2 px-4 text-sm rounded-sm hover:brightness-125 duration-300 transition-all" >Get a new Password</button>
+          <ModalFormButton label="Get a new Password" />
         </div>
       </form>
       <div className="flex justify-between">
-        <button className="text-brand hover:!text-black" onClick={() => { onClose(); onOpenModal(modalLogin);}}>Cancel</button>
+        <ModalFooterButton 
+          onClick={() => { onClose(); onOpenModal(modalLogin);}}
+          label="Cancel"
+        />
       </div>
     </Modal>
   );
@@ -176,12 +216,21 @@ function SignupModal({ modalRef, onClose, onOpenModal, modalLogin, modalForgotte
           autoComplete="off"
         />
         <div className="w-full flex flex-col gap-2 mb-4 ">
-          <button type="submit" className="uppercase bg-brand/80 text-white w-fit mr-auto py-2 px-4 text-sm rounded-sm hover:brightness-125 duration-300 transition-all" >Sign Up</button>
+          <ModalFormButton label="Sign Up" />
         </div>
       </form>
       <div className="flex justify-between">
-        <p>Already a member? <button className="text-brand hover:!text-black" onClick={() => { onClose(); onOpenModal(modalLogin);}}>Sign In</button></p>
-        <p><button className="text-brand hover:!text-black" onClick={() => { onClose(); onOpenModal(modalForgotten);}}>Forgot Password</button></p>
+        <p>Already a member?
+          <ModalFooterButton
+            onClick={() => { onClose(); onOpenModal(modalLogin);}}
+            label="Sign In"
+            className="pl-[1ch]"
+          />
+        </p>
+        <ModalFooterButton
+          onClick={() => { onClose(); onOpenModal(modalForgotten);}}
+          label="Forgot Password"
+        />
       </div>
     </Modal>
   );
