@@ -5,6 +5,7 @@
   "scripts": {
     "boot": "yarn install  && next dev",
     "dev": "next dev",
+    "preview": "next build  && next start",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
