@@ -2,18 +2,17 @@
 
 import { GlobeIcon, SearchIcon } from "@/components/icons";
 import { Checkbox, Input, Modal } from "@/components";
-import { IBaseProps } from "@/utils/interfaces";
+import { IBaseModal, IBaseModalWithOpen, IBaseProps } from "@/utils/interfaces";
 import { RefObject, useRef, useState } from "react";
+import { closeModal, openModal } from "@/utils/modal";
 
 interface ILoginProps extends IBaseProps {
   alerts?: number;
 }
 
 // Local modal components
-interface ModalProps {
-  modalRef: RefObject<HTMLDialogElement | null>;
-  onClose: () => void;
-  onOpenModal: (modalRef: RefObject<HTMLDialogElement | null>) => void;
+// other modals included here as we need to hook into those too
+interface ModalProps extends IBaseModal, IBaseModalWithOpen {
   modalSignup: RefObject<HTMLDialogElement | null>;
   modalForgotten: RefObject<HTMLDialogElement | null>;
   modalLogin: RefObject<HTMLDialogElement | null>;
@@ -201,18 +200,6 @@ export default function Login(props: ILoginProps) {
       }else{
         modalLogin.current.showModal();
       }
-    }
-  }
-
-  function closeModal(modalRef: RefObject<HTMLDialogElement | null>){
-    if (modalRef && modalRef.current){
-      modalRef.current.close();
-    }
-  }
-
-  function openModal(modalRef: RefObject<HTMLDialogElement | null>){
-    if (modalRef && modalRef.current){
-      modalRef.current.showModal();
     }
   }
   

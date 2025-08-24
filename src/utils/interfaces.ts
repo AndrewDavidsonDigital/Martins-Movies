@@ -1,3 +1,5 @@
+import { RefObject } from "react";
+
 export interface IBaseProps {
   className?: string;
 }
@@ -114,4 +116,13 @@ export interface IKeywordsAPI {
 export interface IKeyword {
   id: number;
   name: string;
+}
+
+
+export interface IBaseModal {
+  modalRef: RefObject<HTMLDialogElement | null>;
+  onClose: () => void;
+}
+export interface IBaseModalWithOpen {
+  onOpenModal: (modalRef: RefObject<HTMLDialogElement | null>) => void;
 }
