@@ -1,11 +1,15 @@
 "use client"
 
+import { ChevronIcon } from "./icons";
+
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
   className?: string;
 }
+
+const MAX_NAVIGABLE_PAGE_INDEX = 500;
 
 export function Pagination({ 
   currentPage, 
@@ -16,8 +20,11 @@ export function Pagination({
   // Don't render if there's only one page or no pages
   if (totalPages <= 1) return null;
 
+  // Limit total pages to the maximum navigable page index
+  const limitedTotalPages = Math.min(totalPages, MAX_NAVIGABLE_PAGE_INDEX);
+
   const handlePageChange = (page: number) => {
-    if (page >= 1 && page <= totalPages) {
+    if (page >= 1 && page <= limitedTotalPages) {
       onPageChange(page);
     }
   };
@@ -29,7 +36,7 @@ export function Pagination({
 
     for (
       let i = Math.max(2, currentPage - delta);
-      i <= Math.min(totalPages - 1, currentPage + delta);
+      i <= Math.min(limitedTotalPages - 1, currentPage + delta);
       i++
     ) {
       range.push(i);
@@ -43,10 +50,10 @@ export function Pagination({
 
     rangeWithDots.push(...range);
 
-    if (currentPage + delta < totalPages - 1) {
-      rangeWithDots.push("...", totalPages);
-    } else if (totalPages > 1) {
-      rangeWithDots.push(totalPages);
+    if (currentPage + delta < limitedTotalPages - 1) {
+      rangeWithDots.push("...", limitedTotalPages);
+    } else if (limitedTotalPages > 1) {
+      rangeWithDots.push(limitedTotalPages);
     }
 
     return rangeWithDots;
@@ -55,25 +62,28 @@ export function Pagination({
   const visiblePages = getVisiblePages();
 
   return (
-    <div className={`flex items-center justify-center gap-2 ${className}`}>
+    <div className={`flex items-center justify-center gap-4 ${className}`}>
       {/* Previous button */}
-      <button
-        onClick={() => handlePageChange(currentPage - 1)}
-        disabled={currentPage <= 1}
-        className={`
-          flex items-center justify-center w-10 h-10 rounded-md border transition-all duration-200
-          ${currentPage <= 1
-            ? "border-slate-300 text-slate-400 cursor-not-allowed"
-            : "border-slate-400 text-slate-600 hover:bg-slate-50 hover:border-fuchsia-500 hover:text-fuchsia-600"
-          }
-        `}
-        aria-label="Previous page"
-      >
-        ←
-      </button>
+      {currentPage > 1 && (
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage <= 1}
+          className={`
+            flex items-center justify-center w-10 h-10 rounded-full transition-all duration-200
+            rotate-180
+            ${currentPage <= 1
+              ? "text-slate-300 cursor-not-allowed"
+              : "text-slate-600 hover:text-brand/70 hover:bg-slate-300"
+            }
+          `}
+          aria-label="Previous page"
+        >
+          <ChevronIcon />
+        </button>
+      )}
 
       {/* Page numbers */}
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-2">
         {visiblePages.map((page, index) => (
           <div key={`page_${index}`}>
             {page === "..." ? (
@@ -82,10 +92,12 @@ export function Pagination({
               <button
                 onClick={() => handlePageChange(page as number)}
                 className={`
-                  w-10 h-10 rounded-md border transition-all duration-200
-                  ${currentPage === page
-                    ? "bg-fuchsia-600 border-fuchsia-600 text-white"
-                    : "border-slate-400 text-slate-600 hover:bg-slate-50 hover:border-fuchsia-500 hover:text-fuchsia-600"
+                  w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 border-none
+                  ${currentPage === page 
+                    ? "bg-brand text-white"
+                    : page === 1 || page === limitedTotalPages
+                    ? "bg-white text-slate-400 hover:text-brand/70"
+                    : "text-lg font-medium  hover:text-brand  hover:bg-slate-300"
                   }
                 `}
               >
@@ -97,20 +109,22 @@ export function Pagination({
       </div>
 
       {/* Next button */}
-      <button
-        onClick={() => handlePageChange(currentPage + 1)}
-        disabled={currentPage >= totalPages}
-        className={`
-          flex items-center justify-center w-10 h-10 rounded-md border transition-all duration-200
-          ${currentPage >= totalPages
-            ? "border-slate-300 text-slate-400 cursor-not-allowed"
-            : "border-slate-400 text-slate-600 hover:bg-slate-50 hover:border-fuchsia-500 hover:text-fuchsia-600"
-          }
-        `}
-        aria-label="Next page"
-      >
-        →
-      </button>
+      {currentPage < limitedTotalPages && (
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage >= limitedTotalPages}
+          className={`
+            flex items-center justify-center w-10 h-10 rounded-full transition-all duration-200
+            ${currentPage >= limitedTotalPages
+              ? "text-slate-300 cursor-not-allowed"
+              : "text-slate-600 hover:text-brand/70 hover:bg-slate-300"
+            }
+          `}
+          aria-label="Next page"
+        >
+          <ChevronIcon />
+        </button>
+      )}
     </div>
   );
 }
