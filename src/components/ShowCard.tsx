@@ -137,7 +137,7 @@ export function ShowCard(props: IShowCardProps) {
         )}
         <h3 className={`text-3xl font-semibold tracking-tight ${! (props.isGrid) ?  'md:w-fit md:mx-auto md:text-center' : ''}`}>{props.title}</h3>
         { !(props.isGrid) && (
-          <GenresDisplay genres={props.genres} className='mx-auto opacity-75 text-sm' />
+          <GenresDisplay genres={props.genres} className='mx-auto opacity-75 text-sm md:block hidden' />
         )}
         <div 
           className={`
@@ -162,7 +162,8 @@ export function ShowCard(props: IShowCardProps) {
             label='Read More'
           />
         )}
-        <div className='absolute flex gap-2 -mt-10 -ml-[40%] z-10'>
+        { !(props.isGrid) && (
+        <div className='absolute hidden md:flex gap-2 -mt-10 -ml-[40%] z-10'>
           <button 
             className='hover:opacity-100 group-hover:opacity-100 opacity-40 duration-300 transition-all hover:brightness-150 relative group/rate'
           >
@@ -182,6 +183,7 @@ export function ShowCard(props: IShowCardProps) {
             </div>
           </button>
         </div>
+        )}
       </div>
       {props.hasVideo && (
         <VideoModal
