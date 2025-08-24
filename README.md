@@ -5,8 +5,10 @@
 
 A modern movie discovery platform built with Next.js 14, Tailwind CSS v4, and TypeScript. This project demonstrates a complete movie listing application with search, filtering, and responsive design capabilities.
 
+
 ### 📋 Table of Contents
 
+- [TLDR](#TLDR)
 - [Quick Start](#quick-start)
 - [Description](#description)
 - [Features](#features)
@@ -17,6 +19,14 @@ A modern movie discovery platform built with Next.js 14, Tailwind CSS v4, and Ty
 - [Project Structure](#project-structure)
 - [Known Issues](#known-issues)
 - [Version History](#version-history)
+
+## TLDR:
+Known Good with Yarn 4.9+ and Node 22.17+ on windows, in Chrome and FF. 
+
+⚠️ Some of the more recent movie entries are not properly tagged for Adult content and will start showing up from page-3 on the default search. Nothing too raunchy but is worth noting before use.
+
+Some of the logic in the [discovers api (search)](https://developer.themoviedb.org/reference/discover-movie) seems a bit off:
+- purely looking at page-3 and page-4 we can see that id `611251` is both last in page-3 and first in page-4. Just food for thought as this was tested on their api-sandbox so is not something in this code-base being weird.
 
 ### 🚀 Quick Start
 
@@ -56,7 +66,9 @@ This site is a technical task, see [Requirements.md](./Requirements.md), bootstr
 ### 🔄 Planned Enhancements
 - **Improved Loading States**: Minimum display time to prevent flashing
 - **Modal Refactoring**: Centralized modal management
+- **Mobile Pagination**: Mobile pagination as a whole needs a design re-factor as it doesn't really fit and visually feels forced.
 - **Better Mobile Navigation**: Enhanced mobile experience
+- **Contextual Scroll-to-Top**: Button should only be visible when we are not already at the top.
 - **Critical CSS**: Performance optimizations
 
 ### ❌ Excluded Features
