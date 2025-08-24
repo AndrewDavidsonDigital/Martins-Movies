@@ -1,7 +1,6 @@
 'use client'
 
-import { resolveRouteFromPath, resolveRoutePath } from '@/app/routes';
-import Image from 'next/image';
+import { resolveRouteFromPath, resolveRoutePath } from '@/utils/routes';
 import { usePathname } from 'next/navigation'
 import { Fragment } from 'react';
 
