@@ -1,5 +1,5 @@
 import * as React from "react"
-export function MenuIcon(props: any){
+export function MenuIcon(props: React.SVGProps<SVGSVGElement>){
 
   return (
     <svg
