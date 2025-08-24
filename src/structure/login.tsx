@@ -163,6 +163,7 @@ function SignupModal({ modalRef, onClose, onOpenModal, modalLogin, modalForgotte
           value={formData.email}
           onChange={(value) => handleInputChange('email', value)}
           required
+          autoComplete="off"
         />
         <Input
           id="signup_pass"
@@ -173,6 +174,7 @@ function SignupModal({ modalRef, onClose, onOpenModal, modalLogin, modalForgotte
           value={formData.password}
           onChange={(value) => handleInputChange('password', value)}
           required
+          autoComplete="off"
         />
         <div className="w-full flex flex-col gap-2 mb-4 ">
           <button type="submit" className="uppercase bg-brand/80 text-white w-fit mr-auto py-2 px-4 text-sm rounded-sm hover:brightness-125 duration-300 transition-all" >Sign Up</button>
