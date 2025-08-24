@@ -245,7 +245,7 @@ export function MoviesListing() {
       {/* Results Display */}
       <div className={`relative ${loading ? 'pointer-events-none' : ''}`}>
         {loading && (
-          <div className="absolute -inset-2 bg-white/70 backdrop-blur-sm z-100 flex items-center justify-center rounded-lg">
+          <div className="absolute -inset-2 bg-white/70 backdrop-blur-sm z-100 flex items-center justify-center rounded-lg min-h-32 ">
             <div className="flex flex-col items-center gap-4">
               <div className="w-8 h-8 border-4 border-brand border-t-transparent rounded-full animate-spin"></div>
               <p className="text-slate-600 font-medium">Loading movies...</p>
