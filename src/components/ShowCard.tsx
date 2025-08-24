@@ -37,6 +37,18 @@ export function ShowCard(props: IShowCardProps) {
       openModal(modalVideo);
     }
   }
+
+  function formatRating(voteAverage: number | string): string {
+    const rating = Number(voteAverage);
+    const formattedRating = rating.toFixed(1);
+    
+    // Remove decimal if it's .0
+    if (formattedRating.endsWith('.0')) {
+      return `${formattedRating.slice(0, -2)}/10`;
+    }
+    
+    return `${formattedRating}/10`;
+  }
   
   return (
     <div 
@@ -128,10 +140,10 @@ export function ShowCard(props: IShowCardProps) {
             ${props.isGrid ? '' : 'md:hidden' }
           `}
         >
-          <span>✨{(props.vote_average).toFixed(1)}/10</span>
+          <span>✨{formatRating(props.vote_average)}</span>
           <GenresDisplay genres={props.genres} />
         </div>
-        <p className={`line-clamp-5 ${! (props.isGrid) ? 'text-neutral-500 text-center' : '' }`}>
+        <p className={`line-clamp-5 text-neutral-500 ${! (props.isGrid) ? 'text-center' : '' }`}>
           {props.overview}
         </p>
         {props.imdb_id && (
