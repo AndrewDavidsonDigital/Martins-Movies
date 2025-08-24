@@ -34,7 +34,7 @@ Some of the logic in the [discovers api (search)](https://developer.themoviedb.o
 ```bash
 # Clone and install
 git clone <repository-url>
-cd ArcadianDigital
+cd Martins-Movies
 yarn install
 
 # Set up environment
