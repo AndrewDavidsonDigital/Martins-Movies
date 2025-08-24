@@ -20,9 +20,10 @@
 export function getYouTubeEmbedUrl(url: string): string {
   // Handle different YouTube URL formats
   const patterns = [
-    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
-    /youtube\.com\/v\/([^&\n?#]+)/,
-    /youtube\.com\/embed\/([^&\n?#]+)/
+    /youtube\.com\/watch\?.*?v=([^&\n?#]+)/,
+    /youtu\.be\/([^&\n?#]+)/,
+    /youtube\.com\/embed\/([^&\n?#]+)/,
+    /youtube\.com\/v\/([^&\n?#]+)/
   ];
   
   for (const pattern of patterns) {
