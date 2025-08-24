@@ -30,7 +30,7 @@ export function Pagination({
   };
 
   const getVisiblePages = () => {
-    const delta = 2; // Number of pages to show on each side of current page
+    const delta = 1; // Number of pages to show on each side of current page
     const range = [];
     const rangeWithDots = [];
 
@@ -62,7 +62,7 @@ export function Pagination({
   const visiblePages = getVisiblePages();
 
   return (
-    <div className={`flex items-center justify-center gap-4 ${className}`}>
+    <div className={`flex items-center max-w-[90%] mx-auto justify-center gap-4 ${className} scale-[80%] md:scale-100`}>
       {/* Previous button */}
       {currentPage > 1 && (
         <button
