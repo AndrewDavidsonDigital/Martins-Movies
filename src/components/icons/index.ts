@@ -4,6 +4,7 @@ export { GlobeIcon } from "./GlobeIcon";
 export { GridIcon } from "./GridIcon";
 export { ListIcon } from "./ListIcon";
 export { ChevronIcon } from "./ChevronIcon";
+export { UserIcon } from "./UserIcon";
 
 export { FacebookIcon } from "./FacebookIcon";
 export { InstagramIcon } from "./InstagramIcon";
