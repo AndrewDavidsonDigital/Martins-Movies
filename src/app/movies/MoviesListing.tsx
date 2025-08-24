@@ -190,7 +190,7 @@ export function MoviesListing() {
         </div>
         {/* Filter */}
         <select 
-          className="py-2 px-4 h-10 rounded-md border bg-white border-slate-400 text-slate-600 w-fit md:w-60 lg:w-68 appearance-none"
+          className="py-2 px-4 h-10 rounded-md border bg-white border-slate-400 text-slate-600 w-fit md:w-60 lg:w-68 appearance-none focus-visible:outline-2 focus-visible:outline-brand"
           onChange={(e)=> handleFilterChange(e)}
           value={filterType}
         >
@@ -223,7 +223,7 @@ export function MoviesListing() {
       {/* Results Display */}
       <div className={`relative ${loading ? 'pointer-events-none' : ''}`}>
         {loading && (
-          <div className="absolute -inset-2 bg-white/80 backdrop-blur-sm z-100 flex items-center justify-center rounded-lg">
+          <div className="absolute -inset-2 bg-white/70 backdrop-blur-sm z-100 flex items-center justify-center rounded-lg">
             <div className="flex flex-col items-center gap-4">
               <div className="w-8 h-8 border-4 border-brand border-t-transparent rounded-full animate-spin"></div>
               <p className="text-slate-600 font-medium">Loading movies...</p>
