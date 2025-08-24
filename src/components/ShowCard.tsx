@@ -19,7 +19,7 @@ export function ShowCard(props: IShowCardProps) {
 
   function toggleOpenVideo(videoSrc: string){
     setVideoSrc(old => videoSrc);
-    if (modalVideo.current){
+    if (modalVideo.current && !(modalVideo.current.open)){
       openModal(modalVideo);
     }
   }
@@ -128,11 +128,13 @@ export function ShowCard(props: IShowCardProps) {
           >Read More</a>
         )}
       </div>
-      <VideoModal
-        modalRef={modalVideo}
-        onClose={() => closeModal(modalVideo)}
-        src={`${videoSrc}`}
-      />
+      {props.hasVideo && (
+        <VideoModal
+          modalRef={modalVideo}
+          onClose={() => closeModal(modalVideo)}
+          src={`${videoSrc ? videoSrc : null}`}
+        />
+      )}
     </div>
   );
 }
@@ -148,14 +150,15 @@ function VideoModal(props: IBaseModal & { src: string }) {
       borderless
     >
       <div className="w-full h-96">
-        <iframe 
-          src={embedUrl}
-          className="w-full h-full rounded-md"
-          title="YouTube video player"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-        />
+        {props.src.length > 0 && (
+          <iframe 
+            src={embedUrl}
+            className="w-full h-full rounded-md"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        )}
       </div>
     </Modal>
   );
