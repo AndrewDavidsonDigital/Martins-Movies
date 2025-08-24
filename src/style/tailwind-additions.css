@@ -1,0 +1,19 @@
+@theme {
+  --spacing-content: 1130px;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-brand: #9352b3;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+a,
+button {
+  @apply cursor-pointer;
+}
+
+a:hover {
+  @apply text-brand;
+  @apply duration-300 transition-all;
+}

@@ -1,0 +1,12 @@
+/* 
+  Tailwind Safelist
+  
+  Use `@source inline` rules to define class permutations to ensure they are included at 
+  tailwind compile time
+
+  example: 
+  @source inline("{peer-[[data-route='blogs']]:,peer-[[data-route='about']]:,peer-[[data-route='landing']]:,}peer-hover:block"); 
+
+*/
+
+/* @source inline("peer-hover/{Home,Movies,Blog,Contact-Us}{:block,:opacity-100}"); */
