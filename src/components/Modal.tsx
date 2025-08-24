@@ -25,7 +25,7 @@ export function Modal(props: ModalProps) {
       closedby="any"
       className={cn(
         `
-          absolute
+          fixed
           top-[calc(50dvh-50%)]
           left-[calc(50dvw-50%)]
           bg-white
