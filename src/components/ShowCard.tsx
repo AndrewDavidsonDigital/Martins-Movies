@@ -6,6 +6,8 @@ import { closeModal, openModal } from '@/utils/modal';
 import { useRef, useState } from 'react';
 import { getYouTubeEmbedUrl } from '@/utils/string';
 import Image from 'next/image';
+import { LinkElement } from '@/components';
+import { HeartIcon, ShareIcon } from './icons';
 
 interface IShowCardProps extends IMovieCombinationDetail{
   isGrid: boolean;
@@ -149,23 +151,37 @@ export function ShowCard(props: IShowCardProps) {
         <p className={`line-clamp-5 text-neutral-500 text-sm leading-relaxed ${! (props.isGrid) ? 'text-center' : '' }`}>
           {props.overview}
         </p>
-        {props.imdb_id && (
-          <a 
-            className={`
-              uppercase
-              font-medium tracking-wide
-              hover:brightness-125
-              hover:bg-brand/90 hover:!text-white bg-brand/80 text-white 
-              w-fit 
-              py-2 px-4 
-              mr-auto text-sm rounded-sm duration-300 transition-all
-              mt-auto
-              ${! (props.isGrid) ?  'md:mx-auto' : ''}
-            `}
-            href={`https://www.imdb.com/title/${props.imdb_id}/`}
-            target='_blank'
-          >Read More</a>
+        {!(props.isGrid) && (
+          <span className="hidden md:block mx-auto font-medium text-sm text-white/60">✨{formatRating(props.vote_average)}</span>
         )}
+        {props.imdb_id && (
+          <LinkElement
+            className={!(props.isGrid) ?  'md:mx-auto' : '' }
+            href={`https://www.imdb.com/title/${props.imdb_id}/`}
+            isExternal
+            label='Read More'
+          />
+        )}
+        <div className='absolute flex gap-2 -mt-10 -ml-[40%] z-10'>
+          <button 
+            className='hover:opacity-100 group-hover:opacity-100 opacity-40 duration-300 transition-all hover:brightness-150 relative group/rate'
+          >
+            <HeartIcon className='group-hover/rate:stroke-brand hover:stroke-brand'/>
+            <div className='absolute mt-2 translate-x-[calc(-50%_+12px)] w-fit h-0 overflow-clip hover:overflow-visible group-hover/rate:overflow-visible group-hover/rate:h-auto bg-black text-sm font-thin rounded-sm grid-area-stack'>
+              <div className='bg-black rotate-45 size-2 mx-auto -mt-1'></div>
+              <p className=' px-2 py-1'>Rate</p>
+            </div>
+          </button>
+          <button 
+            className='hover:opacity-100 group-hover:opacity-100 opacity-40 duration-300 transition-all hover:brightness-150 relative group/share'
+          >
+            <ShareIcon className='group-hover/share:stroke-brand hover:stroke-brand'/>
+            <div className='absolute mt-2 translate-x-[calc(-50%_+12px)] w-fit h-0 overflow-clip hover:overflow-visible group-hover/share:overflow-visible group-hover/share:h-auto bg-black text-sm font-thin rounded-sm grid-area-stack'>
+              <div className='bg-black rotate-45 size-2 mx-auto -mt-1'></div>
+              <p className=' px-2 py-1'>Share</p>
+            </div>
+          </button>
+        </div>
       </div>
       {props.hasVideo && (
         <VideoModal
