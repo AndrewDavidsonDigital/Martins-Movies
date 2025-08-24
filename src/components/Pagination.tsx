@@ -95,8 +95,6 @@ export function Pagination({
                   w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 border-none
                   ${currentPage === page 
                     ? "bg-brand text-white"
-                    : page === 1 || page === limitedTotalPages
-                    ? "bg-white text-slate-400 hover:text-brand/70"
                     : "text-lg font-medium  hover:text-brand  hover:bg-slate-300"
                   }
                 `}
