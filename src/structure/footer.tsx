@@ -137,7 +137,7 @@ export default function Footer(props: IFooterProps) {
         <div className="flex flex-col">
           <a className="mb-10" href="#">
             <Image
-              className="justify-start"
+              className="justify-start size-auto"
               src="/logo-white.svg"
               alt="Brand Logo"
               height={25}
