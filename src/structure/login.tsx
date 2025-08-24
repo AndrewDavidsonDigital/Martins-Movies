@@ -226,7 +226,7 @@ export default function Login(props: ILoginProps) {
         <GlobeIcon className="scale-125"/>
       </button>
       <button
-        className="rounded-sm bg-violet-500 text-white font-bold px-4 py-2"
+        className="rounded-sm hover:brightness-125 duration-300 transition-all bg-brand text-white font-bold px-4 py-2"
         onClick={() => handleLoginClick()}
       >
         Login

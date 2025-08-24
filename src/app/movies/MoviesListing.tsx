@@ -142,7 +142,7 @@ export function MoviesListing() {
         <div className="flex gap-2">
           <button 
             className={`
-              p-2 bg-slate-200 hover:bg-brand rounded-md aspect-square h-10 transition-all duration-300
+              p-2 bg-slate-200 hover:bg-brand hover:brightness-150 hover:text-slate-400 rounded-md aspect-square h-10 transition-all duration-300
               ${isGridLayout ? '' : '!bg-brand !text-slate-200'}
             `} 
             onClick={() => setGridLayout(false)}
@@ -151,7 +151,7 @@ export function MoviesListing() {
           </button>
           <button 
             className={`
-              p-2 bg-slate-200 hover:bg-brand hover:brightness-150 rounded-md aspect-square h-10 transition-all duration-300
+              p-2 bg-slate-200 hover:bg-brand hover:brightness-150 hover:text-slate-400 rounded-md aspect-square h-10 transition-all duration-300
               ${!isGridLayout ? '' : '!bg-brand !text-slate-200'}
             `} 
             onClick={() => setGridLayout(true)}
@@ -193,7 +193,7 @@ export function MoviesListing() {
       {/* Results Display */}
       <div className="relative">
         {loading && (
-          <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 flex items-center justify-center rounded-lg">
+          <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-100 flex items-center justify-center rounded-lg pointer-events-none">
             <div className="flex flex-col items-center gap-4">
               <div className="w-8 h-8 border-4 border-brand border-t-transparent rounded-full animate-spin"></div>
               <p className="text-slate-600 font-medium">Loading movies...</p>
@@ -204,7 +204,7 @@ export function MoviesListing() {
           className={`
             grid gap-8
             ${isGridLayout ? 'md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'}
-            md:max-w-[min(var(--spacing-content),80%)] min-w-full
+            md:max-w-[min(var(--spacing-content),90%)] min-w-full
           `}
         >
           {listingData.map((cardData, index) => (

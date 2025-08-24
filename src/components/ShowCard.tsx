@@ -12,7 +12,8 @@ export function ShowCard(props: IShowCardProps) {
   return (
     <div 
       className={`
-        bg-red-300 text-white 
+        group
+        text-white 
         w-full 
         grid-area-stack overflow-clip
         rounded-md 
@@ -53,7 +54,7 @@ export function ShowCard(props: IShowCardProps) {
             z-10
             w-full h-80 
             bg-gradient-to-r
-            from-slate-800  via-transparent to-slate-800 
+            from-[#343A40]  via-transparent to-[#343A40] 
             from-2% via-15% to-40%
           "
         ></div>
@@ -66,7 +67,7 @@ export function ShowCard(props: IShowCardProps) {
           p-8 mt-80 
           z-10
           bg-white text-slate-800/80
-          ${! (props.isGrid) ?  'md:max-h-80 md:mt-0 md:ml-[40%] md:w-[60%] md:bg-transparent md:text-white' : '' }
+          ${! (props.isGrid) ?  'md:py-13 md:max-h-80 md:mt-0 md:ml-[40%] md:w-[60%] md:bg-transparent md:text-white' : '' }
         `}
       >
         {/* play video button */}
@@ -80,23 +81,31 @@ export function ShowCard(props: IShowCardProps) {
               drop-shadow-brand drop-shadow-md
               hover:scale-105 duration-500
               grid-area-stack items-center
-              ${! (props.isGrid) ?  'md:absolute md:mb-auto md:mr-auto md:ml-[-25%] md:mt-20' : '' }
+              ${! (props.isGrid) ?  'md:group-hover:scale-100 md:scale-0 md:absolute md:mb-auto md:mr-auto md:ml-[-25%] md:mt-22' : '' }
             `}
           >
             <span className='rotate-90 text-white'>▲</span>
           </button>
         )}
-        <h3 className='text-3xl'>{props.title}</h3>
-        <div className='flex justify-between text-slate-600/60'>
+        <h3 className={`text-3xl ${! (props.isGrid) ?  'md:w-fit md:mx-auto md:text-center' : ''}`}>{props.title}</h3>
+        <div 
+          className={`
+            flex justify-between text-slate-600/60
+            ${props.isGrid ? '' : 'md:hidden' }
+          `}
+        >
           <span>✨{(props.vote_average).toFixed(1)}/10</span>
           <span></span>
         </div>
-        <p className='line-clamp-5'>
+        <p className={`line-clamp-5 ${! (props.isGrid) ? 'text-neutral-500 text-center' : '' }`}>
           {props.overview}
         </p>
         {props.imdb_id && (
           <a 
-            className='hover:!text-black border border-slate-600 uppercase bg-brand/80 text-white w-fit mr-auto py-2 px-4 text-sm rounded-sm hover:brightness-125 duration-300 transition-all'
+            className={`
+              hover:bg-brand/90 hover:!text-white border border-slate-600 uppercase bg-brand/80 text-white w-fit mr-auto py-2 px-4 text-sm rounded-sm hover:brightness-125 duration-300 transition-all
+              ${! (props.isGrid) ?  'md:mx-auto mt-auto' : ''}
+            `}
             href={`https://www.imdb.com/title/${props.imdb_id}/`}
             target='_blank'
           >Read More</a>
