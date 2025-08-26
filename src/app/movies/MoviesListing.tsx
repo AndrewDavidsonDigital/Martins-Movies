@@ -113,7 +113,7 @@ export function MoviesListing() {
       const data = await apiService.get(`${API_URL_MOVIE_LISTING}${selectionDetails}`, API_URL_MOVIE_LISTING);
       
       if (data.success && data.response){
-        // really should zod validate that our return value is of expected schema here.
+        // really should zod validate that our return value is of expected schema here. 
         // for now just cast it
         const asObject = JSON.parse(data.response) as IDiscoverMoviesAPI;
 
@@ -129,7 +129,7 @@ export function MoviesListing() {
             );
             
             if (externalIdData.success && externalIdData.response){
-              // again... really should zod validate that our return value is of expected schema here.
+              // again... really should zod validate that our return value is of expected schema here. 
               // for now just cast it
               const fullDetailsAsObject = JSON.parse(externalIdData.response) as IMovieDetailAPI;
               return {

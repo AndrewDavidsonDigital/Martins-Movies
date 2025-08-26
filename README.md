@@ -71,7 +71,7 @@ This site is a technical task, see [Requirements.md](./Requirements.md), bootstr
 - **Mobile Pagination**: Mobile pagination as a whole needs a design re-factor as it doesn't really fit and visually feels forced.
 - **Better Mobile Navigation**: Enhanced mobile experience
 - **Contextual Scroll-to-Top**: Button should only be visible when we are not already at the top.
-- **Critical CSS**: Performance optimizations
+- **API data shape Validation**: The api results should really be validated to be of the expected shape at runtime, via ZOD
 - **Component Test Coverage**: UI and E2E testing or component library
 
 ### ❌ Excluded Features
